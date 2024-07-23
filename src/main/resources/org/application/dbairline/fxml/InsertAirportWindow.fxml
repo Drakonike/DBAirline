@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.dbairline.controller.InsertAirportWindowController">
+   <children>
+      <VBox>
+         <children>
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="141.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="259.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="ICAO" />
+                  <Label text="IATA" GridPane.rowIndex="1" />
+                  <Label text="Nome commerciale" GridPane.rowIndex="2" />
+                  <Label text="Città" GridPane.rowIndex="3" />
+                  <Label text="Nazione" GridPane.rowIndex="4" />
+                  <Label text="Gestore" GridPane.rowIndex="5" />
+                  <Label text="Contatto gestore" GridPane.rowIndex="6" />
+                  <Label text="Telefono" GridPane.rowIndex="7" />
+                  <Label layoutX="10.0" layoutY="257.0" text="Fax" GridPane.rowIndex="8" />
+                  <TextField fx:id="icaoTF" GridPane.columnIndex="1" />
+                  <TextField fx:id="iataTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="commercialNameTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="cityTF" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="managerTF" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="managerContactTF" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="countryTF" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="telTF" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="faxTF" layoutX="151.0" layoutY="223.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </GridPane>
+            <GridPane alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="closeButton" mnemonicParsing="false" onMouseClicked="#CloseWindow" text="Cancella" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="210.0" layoutY="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="insertButton" mnemonicParsing="false" onMouseClicked="#insert" text="Inserisci" />
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.dbairline.controller.InsertPurchaseWindowController">
+   <children>
+      <VBox>
+         <children>
+            <TableView fx:id="ticketTable" prefHeight="200.0">
+              <columns>
+                  <TableColumn fx:id="flightIdColumn" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Id Volo" />
+                <TableColumn fx:id="flightNumberColumn" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Numero di volo" />
+                  <TableColumn fx:id="seatConfigurationColumn" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Configurazione posti" />
+                  <TableColumn fx:id="flightClassesColumn" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Classe" />
+                  <TableColumn fx:id="seatNumberColumn" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Posto" />
+                  <TableColumn fx:id="paxNameColumn" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Nome passeggero" />
+              </columns>
+            </TableView>
+            <GridPane alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <Button fx:id="insertFlightClassButton" mnemonicParsing="false" onMouseClicked="#insertNewTicket" text="Inserisci nuovo biglietto" />
+                     </children>
+                  </HBox>
+                  <Label text="Id Volo" GridPane.rowIndex="1" />
+                  <Label text="Classe" GridPane.rowIndex="2" />
+                  <Label text="Posto" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="flightIdComboBox" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="flightClassComboBox" layoutX="361.0" layoutY="13.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="seatComboBox" layoutX="361.0" layoutY="43.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Nome passeggero" />
+                  <TextField fx:id="paxNameTextField" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="141.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="Nome completo" GridPane.rowIndex="1" />
+                  <TextField fx:id="buyerNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label layoutX="10.0" layoutY="47.0" text="Dati acquirente" />
+                  <Label layoutX="10.0" layoutY="47.0" text="Nome completo" GridPane.rowIndex="2" />
+                  <Label layoutX="10.0" layoutY="47.0" text="Nome completo" GridPane.rowIndex="3" />
+                  <TextField fx:id="buyerTelephoneTextField" layoutX="205.0" layoutY="43.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="buyerEmailTextField" layoutX="205.0" layoutY="43.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </GridPane>
+            <GridPane alignment="CENTER" layoutX="10.0" layoutY="310.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="closeButton" mnemonicParsing="false" onMouseClicked="#CloseWindow" text="Cancella" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="210.0" layoutY="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="insertButton" mnemonicParsing="false" onMouseClicked="#insert" text="Inserisci" />
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
