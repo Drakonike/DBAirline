@@ -26,124 +26,216 @@ public class MainWindowController implements Initializable {
 
     private WindowManager manager;
 
-    @FXML    private TableColumn<?, ?> aircraftsBuilderColumn;
-    @FXML    private TableColumn<?, ?> aircraftsConfigurationIdColumn;
-    @FXML    private TableColumn<?, ?> aircraftsRegistrationCodeColumn;
-    @FXML    private TableColumn<?, ?> aircraftsTypeColumn;
-    @FXML    private TableView<Aereo> aircrafstTable;
+    @FXML
+    private TableColumn<?, ?> aircraftsBuilderColumn;
+    @FXML
+    private TableColumn<?, ?> aircraftsConfigurationIdColumn;
+    @FXML
+    private TableColumn<?, ?> aircraftsRegistrationCodeColumn;
+    @FXML
+    private TableColumn<?, ?> aircraftsTypeColumn;
+    @FXML
+    private TableView<Aereo> aircrafstTable;
 
 
-    @FXML    private TableColumn<?, ?> airportsCityColumn;
-    @FXML    private TableColumn<?, ?> airportsCommercialNameColumn;
-    @FXML    private TableColumn<?, ?> airportsCountryColumn;
-    @FXML    private TableColumn<?, ?> airportsFaxNumberColumn;
-    @FXML    private TableColumn<?, ?> airportsIATACodeColumn;
-    @FXML    private TableColumn<?, ?> airportsICAOCodeColumn;
-    @FXML    private TableColumn<?, ?> airportsManagerColumn;
-    @FXML    private TableColumn<?, ?> airportsManagerContactColumn;
-    @FXML    private TableColumn<?, ?> airportsTelephoneColumn;
-    @FXML    private TableView<Aeroporto> airportsTable;
+    @FXML
+    private TableColumn<?, ?> airportsCityColumn;
+    @FXML
+    private TableColumn<?, ?> airportsCommercialNameColumn;
+    @FXML
+    private TableColumn<?, ?> airportsCountryColumn;
+    @FXML
+    private TableColumn<?, ?> airportsFaxNumberColumn;
+    @FXML
+    private TableColumn<?, ?> airportsIATACodeColumn;
+    @FXML
+    private TableColumn<?, ?> airportsICAOCodeColumn;
+    @FXML
+    private TableColumn<?, ?> airportsManagerColumn;
+    @FXML
+    private TableColumn<?, ?> airportsManagerContactColumn;
+    @FXML
+    private TableColumn<?, ?> airportsTelephoneColumn;
+    @FXML
+    private TableView<Aeroporto> airportsTable;
 
     //Travel classes Table
-    @FXML    private TableColumn<?, ?> travelClassesIdColumn;
-    @FXML    private TableColumn<?, ?> travelClassesNameColumn;
-    @FXML    private TableView<Classe> travelClassesTable;
+    @FXML
+    private TableColumn<?, ?> travelClassesIdColumn;
+    @FXML
+    private TableColumn<?, ?> travelClassesNameColumn;
+    @FXML
+    private TableView<Classe> travelClassesTable;
 
     // Seats Configurations Table
-    @FXML    private TableColumn<?, ?> seatConfigurationsIdColumn;
-    @FXML    private TableColumn<?, ?> seatConfigurationsCapacityColumn;
-    @FXML    private TableColumn<?, ?> seatConfigurationsNameColumn;
-    @FXML    private TableView<Configurazione> seatsConfigurationsTable;
+    @FXML
+    private TableColumn<?, ?> seatConfigurationsIdColumn;
+    @FXML
+    private TableColumn<?, ?> seatConfigurationsCapacityColumn;
+    @FXML
+    private TableColumn<?, ?> seatConfigurationsNameColumn;
+    @FXML
+    private TableView<Configurazione> seatsConfigurationsTable;
 
     // Employees Table
-    @FXML    private TableColumn<?, ?> employeesAddressColumn;
-    @FXML    private TableColumn<?, ?> employeesCityColumn;
-    @FXML    private TableColumn<?, ?> employeesIdColumn;
-    @FXML    private TableColumn<?, ?> employeesNameColumn;
-    @FXML    private TableColumn<?, ?> employeesNationalityColumn;
-    @FXML    private TableColumn<?, ?> employeesRankColumn;
-    @FXML    private TableColumn<?, ?> employeesRoleColumn;
-    @FXML    private TableColumn<?, ?> employeesSalaryColumn;
-    @FXML    private TableColumn<?, ?> employeesSurnameColumn;
-    @FXML    private TableColumn<?, ?> employeesTelephoneNumberColumn;
-    @FXML    private TableView<Dipendente> employeesTable;
+    @FXML
+    private TableColumn<?, ?> employeesAddressColumn;
+    @FXML
+    private TableColumn<?, ?> employeesCityColumn;
+    @FXML
+    private TableColumn<?, ?> employeesIdColumn;
+    @FXML
+    private TableColumn<?, ?> employeesNameColumn;
+    @FXML
+    private TableColumn<?, ?> employeesNationalityColumn;
+    @FXML
+    private TableColumn<?, ?> employeesRankColumn;
+    @FXML
+    private TableColumn<?, ?> employeesRoleColumn;
+    @FXML
+    private TableColumn<?, ?> employeesSalaryColumn;
+    @FXML
+    private TableColumn<?, ?> employeesSurnameColumn;
+    @FXML
+    private TableColumn<?, ?> employeesTelephoneNumberColumn;
+    @FXML
+    private TableView<Dipendente> employeesTable;
 
     // Fares Table
-    @FXML    private TableColumn<?, ?> faresFlightClassColumn;
-    @FXML    private TableColumn<?, ?> faresEndDateColumn;
-    @FXML    private TableColumn<?, ?> faresFlightNumberColumn;
-    @FXML    private TableColumn<?, ?> faresIdColumn;
-    @FXML    private TableColumn<?, ?> faresLegNumberColumn;
-    @FXML    private TableColumn<?, ?> faresStartDateColumn;
-    @FXML    private TableColumn<?, ?> faresValueColumn;
-    @FXML    private TableView<Tariffa> faresTable;
+    @FXML
+    private TableColumn<?, ?> faresFlightClassColumn;
+    @FXML
+    private TableColumn<?, ?> faresEndDateColumn;
+    @FXML
+    private TableColumn<?, ?> faresFlightNumberColumn;
+    @FXML
+    private TableColumn<?, ?> faresIdColumn;
+    @FXML
+    private TableColumn<?, ?> faresLegNumberColumn;
+    @FXML
+    private TableColumn<?, ?> faresStartDateColumn;
+    @FXML
+    private TableColumn<?, ?> faresValueColumn;
+    @FXML
+    private TableView<Tariffa> faresTable;
 
     // Flights Table
-    @FXML    private TableColumn<?, ?> flightAircraftCol;
-    @FXML    private TableColumn<?, ?> flightAircraftConfigCol;
-    @FXML    private TableColumn<?, ?> flightAltAirportCol;
-    @FXML    private TableColumn<?, ?> flightArrCol;
-    @FXML    private TableColumn<?, ?> flightCancelledCol;
-    @FXML    private TableColumn<?, ?> flightDepCol;
-    @FXML    private TableColumn<?, ?> flightEffDepTimeCol;
-    @FXML    private TableColumn<?, ?> flightEffDesTimeCol;
-    @FXML    private TableColumn<?, ?> flightFlightNumCol;
-    @FXML    private TableColumn<?, ?> flightIdCol;
-    @FXML    private TableColumn<?, ?> flightProgDepTimeCol;
-    @FXML    private TableColumn<?, ?> flightProgDesTimeCol;
-    @FXML    private TableView<Volo> flightsTable;
+    @FXML
+    private TableColumn<?, ?> flightAircraftCol;
+    @FXML
+    private TableColumn<?, ?> flightAircraftConfigCol;
+    @FXML
+    private TableColumn<?, ?> flightAltAirportCol;
+    @FXML
+    private TableColumn<?, ?> flightArrCol;
+    @FXML
+    private TableColumn<?, ?> flightCancelledCol;
+    @FXML
+    private TableColumn<?, ?> flightDepCol;
+    @FXML
+    private TableColumn<?, ?> flightEffDepTimeCol;
+    @FXML
+    private TableColumn<?, ?> flightEffDesTimeCol;
+    @FXML
+    private TableColumn<?, ?> flightFlightNumCol;
+    @FXML
+    private TableColumn<?, ?> flightIdCol;
+    @FXML
+    private TableColumn<?, ?> flightProgDepTimeCol;
+    @FXML
+    private TableColumn<?, ?> flightProgDesTimeCol;
+    @FXML
+    private TableView<Volo> flightsTable;
 
     // Itineraries Table
-    @FXML    private TableColumn<?, ?> itinerariesFlightNumCol;
-    @FXML    private TableColumn<?, ?> itinerariesFlightTypeCol;
-    @FXML    private TableView<Itinerario> itinerariesTable;
+    @FXML
+    private TableColumn<?, ?> itinerariesFlightNumCol;
+    @FXML
+    private TableColumn<?, ?> itinerariesFlightTypeCol;
+    @FXML
+    private TableView<Itinerario> itinerariesTable;
 
     // Flight Legs Table
-    @FXML    private TableColumn<?, ?> flightLegsArrivalColumn;
-    @FXML    private TableColumn<?, ?> flightLegsDepartureColumn;
-    @FXML    private TableColumn<?, ?> flightLegslegNumberColumn;
-    @FXML    private TableView<Tratta> flightLegsTable;
+    @FXML
+    private TableColumn<?, ?> flightLegsArrivalColumn;
+    @FXML
+    private TableColumn<?, ?> flightLegsDepartureColumn;
+    @FXML
+    private TableColumn<?, ?> flightLegslegNumberColumn;
+    @FXML
+    private TableView<Tratta> flightLegsTable;
 
     // table
-    @FXML    private TableColumn<?, ?> purchasesDateColumn;
-    @FXML    private TableColumn<?, ?> purchasesPurchaserEmailColumn;
-    @FXML    private TableColumn<?, ?> purchasesPurchaserNameColumn;
-    @FXML    private TableColumn<?, ?> purchasesPurchaserTelephoneNumberColumn;
-    @FXML    private TableColumn<?, ?> purchasesIdColumn;
-    @FXML    private TableColumn<?, ?> purchasesImportColumn;
-    @FXML    private TableView<Acquisto> purchasesTable;
+    @FXML
+    private TableColumn<?, ?> purchasesDateColumn;
+    @FXML
+    private TableColumn<?, ?> purchasesPurchaserEmailColumn;
+    @FXML
+    private TableColumn<?, ?> purchasesPurchaserNameColumn;
+    @FXML
+    private TableColumn<?, ?> purchasesPurchaserTelephoneNumberColumn;
+    @FXML
+    private TableColumn<?, ?> purchasesIdColumn;
+    @FXML
+    private TableColumn<?, ?> purchasesImportColumn;
+    @FXML
+    private TableView<Acquisto> purchasesTable;
 
     // table
-    @FXML    private TableColumn<?, ?> refuelsCostColumn;
-    @FXML    private TableColumn<?, ?> refuelsFuelTypeColumn;
-    @FXML    private TableColumn<?, ?> refuelsFlightIdColumn;
-    @FXML    private TableColumn<?, ?> refuelsQuantityColumn;
-    @FXML    private TableView<Rifornimento> refuelsTable;
+    @FXML
+    private TableColumn<?, ?> refuelsCostColumn;
+    @FXML
+    private TableColumn<?, ?> refuelsFuelTypeColumn;
+    @FXML
+    private TableColumn<?, ?> refuelsFlightIdColumn;
+    @FXML
+    private TableColumn<?, ?> refuelsQuantityColumn;
+    @FXML
+    private TableView<Rifornimento> refuelsTable;
 
     // table
-    @FXML    private TableColumn<?, ?> schedulesSeatConfigurationIdColumn;
-    @FXML    private TableColumn<?, ?> schedulesDayColumn;
-    @FXML    private TableColumn<?, ?> schedulesFlightNumberColumn;
-    @FXML    private TableColumn<?, ?> schedulesFlightTimeColumn;
-    @FXML    private TableColumn<?, ?> schedulesDepartureTimeColumn;
-    @FXML    private TableColumn<?, ?> schedulesLegNumberColumn;
-    @FXML    private TableView<Programma> schedulesTable;
+    @FXML
+    private TableColumn<?, ?> schedulesSeatConfigurationIdColumn;
+    @FXML
+    private TableColumn<?, ?> schedulesDayColumn;
+    @FXML
+    private TableColumn<?, ?> schedulesFlightNumberColumn;
+    @FXML
+    private TableColumn<?, ?> schedulesFlightTimeColumn;
+    @FXML
+    private TableColumn<?, ?> schedulesDepartureTimeColumn;
+    @FXML
+    private TableColumn<?, ?> schedulesLegNumberColumn;
+    @FXML
+    private TableView<Programma> schedulesTable;
 
     // table
-    @FXML    private TableColumn<?, ?> seatsClassNameColumn;
-    @FXML    private TableColumn<?, ?> seatsNumberColumn;
-    @FXML    private TableView<Posto> seatsTable;
+    @FXML
+    private TableColumn<?, ?> seatsClassNameColumn;
+    @FXML
+    private TableColumn<?, ?> seatsNumberColumn;
+    @FXML
+    private TableView<Posto> seatsTable;
 
     // table
-    @FXML    private TableColumn<?, ?> ticketsConfigurationIdColumn;
-    @FXML    private TableColumn<?, ?> ticketsFlightClassNameColumn;
-    @FXML    private TableColumn<?, ?> ticketsFlightIdColumn;
-    @FXML    private TableColumn<?, ?> ticketsFlightNumberColumn;
-    @FXML    private TableColumn<?, ?> ticketsIdColumn;
-    @FXML    private TableColumn<?, ?> ticketsSeatNumberColumn;
-    @FXML    private TableColumn<?, ?> ticketsPriceColumn;
-    @FXML    private TableColumn<?, ?> ticketsPaxNameColumn;
-    @FXML    private TableView<Biglietto> ticketsTable;
+    @FXML
+    private TableColumn<?, ?> ticketsPurchaseIdColumn;
+    @FXML
+    private TableColumn<?, ?> ticketsFlightClassNameColumn;
+    @FXML
+    private TableColumn<?, ?> ticketsFlightIdColumn;
+    @FXML
+    private TableColumn<?, ?> ticketsFlightNumberColumn;
+    @FXML
+    private TableColumn<?, ?> ticketsIdColumn;
+    @FXML
+    private TableColumn<?, ?> ticketsSeatNumberColumn;
+    @FXML
+    private TableColumn<?, ?> ticketsPriceColumn;
+    @FXML
+    private TableColumn<?, ?> ticketsPaxNameColumn;
+    @FXML
+    private TableView<Biglietto> ticketsTable;
 
 
     @Override
@@ -416,7 +508,7 @@ public class MainWindowController implements Initializable {
     }
 
     private void setupTicketsTable() {
-        ticketsConfigurationIdColumn.setCellValueFactory(new PropertyValueFactory<>("idConfigurazione"));
+        ticketsPurchaseIdColumn.setCellValueFactory(new PropertyValueFactory<>("idAcquisto"));
         ticketsFlightClassNameColumn.setCellValueFactory(new PropertyValueFactory<>("nomeClasse"));
         ticketsFlightIdColumn.setCellValueFactory(new PropertyValueFactory<>("idVolo"));
         ticketsFlightNumberColumn.setCellValueFactory(new PropertyValueFactory<>("numeroDiVolo"));
@@ -435,10 +527,12 @@ public class MainWindowController implements Initializable {
         setupFlightsTable();
         setupItinerariesTable();
         setupPurchasesTable();
+        setupRefuelsTable();
         setupSchedulesTable();
         setupSeatClassTable();
         setupSeatConfigTable();
         setupSeatsTable();
+        setupTicketsTable();
 
         itinerariesTable.setRowFactory(tv -> {
             ObservableList<Tratta> legData = FXCollections.observableArrayList();
@@ -506,15 +600,13 @@ public class MainWindowController implements Initializable {
             seatsConfigurationsTable.setItems(configData);
         }
 
-        /*
-        if (configTable.getFocusModel().getFocusedItem() != null) {
-            ObservableList<Posto> seatData = FXCollections.observableArrayList();
-            seatData.addAll(fetchSeatsFromDatabase(conn, configTable.getFocusModel().getFocusedItem().getIdConfigurazione()));
-            if (!seatData.isEmpty()) {
-                seatTable.setItems(seatData);
+        if (seatsConfigurationsTable.getFocusModel().getFocusedItem() != null) {
+            ObservableList<Configurazione> configurationsData = FXCollections.observableArrayList();
+            configurationsData.addAll(fetchConfigurationsFromDatabase(conn));
+            if (!configurationsData.isEmpty()) {
+                seatsConfigurationsTable.setItems(configurationsData);
             }
         }
-        */
 
         ObservableList<Classe> flightClassesData = FXCollections.observableArrayList();
         flightClassesData.addAll(fetchFlightClassesFromDatabase(conn));
@@ -542,6 +634,7 @@ public class MainWindowController implements Initializable {
                 flightLegsTable.setItems(legsData);
             }
         }
+
         ObservableList<Dipendente> employeesData = FXCollections.observableArrayList();
         employeesData.addAll(fetchEmployeesFromDatabase(conn));
         if (!employeesData.isEmpty()) {
@@ -559,7 +652,6 @@ public class MainWindowController implements Initializable {
         if (!flightsData.isEmpty()) {
             flightsTable.setItems(flightsData);
         }
-
 
         ObservableList<Rifornimento> refuelsData = FXCollections.observableArrayList();
         refuelsData.addAll(fetchRefuelingFromDatabase(conn));
@@ -579,8 +671,10 @@ public class MainWindowController implements Initializable {
             ticketsTable.setItems(ticketsData);
         }
 
-
     }
+
+
+    /////////////////////////////////////// Data fetching for tables /////////////////////////////////////////////////
 
     private List<Aeroporto> fetchAirportsFromDatabase(Connection conn) {
         List<Aeroporto> aeroporti;
@@ -677,18 +771,16 @@ public class MainWindowController implements Initializable {
         return programmi;
     }
 
-    /*
     private List<Posto> fetchSeatsFromDatabase(Connection conn, int idConfigurazione) {
         List<Posto> seats;
         try {
-            seats = Posto.mapTo(DAUtility.executeQuery(conn, Queries.SelectAll.PROGRAMMI));
+            seats = Posto.mapTo(DAUtility.executeQuery(conn, String.valueOf(idConfigurazione)));
         } catch (SQLException e) {
             System.out.println(e);
             return null;
         }
         return seats;
     }
-    */
 
     private List<Biglietto> fetchTicketsFromDatabase(Connection conn) {
         List<Biglietto> biglietti;
@@ -751,6 +843,4 @@ public class MainWindowController implements Initializable {
         }
         return acquisti;
     }
-
-
 }

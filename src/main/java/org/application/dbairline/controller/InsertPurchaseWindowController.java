@@ -98,8 +98,7 @@ public class InsertPurchaseWindowController implements Initializable {
 
         Connection conn = null;
         try {
-            conn = DAUtility.getConnection();
-            conn.setAutoCommit(false);
+            conn = DAUtility.getConnection(false, Connection.TRANSACTION_SERIALIZABLE);
 
             int purchaseId = 0;
 

@@ -27,10 +27,11 @@ public class DAUtility {
         return false;
     }
 
+
     /**
-     * Retrieves a connection to the database.
+     * Retrieves a connection to the MySQL database.
      *
-     * @return the connection to the database
+     * @return a Connection object representing the connection to the database
      * @throws SQLException if an error occurs while establishing the connection
      */
     public static Connection getConnection() throws SQLException {
@@ -39,8 +40,62 @@ public class DAUtility {
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        return connection;
     }
+
+    /**
+     * Retrieves a connection to the MySQL database with the specified isolation level.
+     *
+     * @param isolationLevel the isolation level for the connection.
+     *                       It can be one of the following constants defined in the java.sql.Connection class:
+     *                       - Connection.TRANSACTION_NONE
+     *                       - Connection.TRANSACTION_READ_UNCOMMITTED
+     *                       - Connection.TRANSACTION_READ_COMMITTED
+     *                       - Connection.TRANSACTION_REPEATABLE_READ
+     *                       - Connection.TRANSACTION_SERIALIZABLE
+     * @return a Connection object representing the connection to the MySQL database.
+     * @throws SQLException if an error occurs while establishing the connection.
+     */
+    public static Connection getConnection(Integer isolationLevel) throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        connection.setTransactionIsolation(isolationLevel);
+        return connection;
+    }
+
+    /**
+     * Retrieves a Connection object to connect to the MySQL database with the specified auto commit and isolation level settings.
+     *
+     * @param doAutoCommit   the auto commit setting for the Connection object
+     *                       true if auto commit is enabled, false if it is disabled
+     * @param isolationLevel the isolation level for the Connection object
+     *                       as defined by the java.sql.Connection constants:
+     *                       - Connection.TRANSACTION_NONE
+     *                       - Connection.TRANSACTION_READ_UNCOMMITTED
+     *                       - Connection.TRANSACTION_READ_COMMITTED
+     *                       - Connection.TRANSACTION_REPEATABLE_READ
+     *                       - Connection.TRANSACTION_SERIALIZABLE
+     * @return a Connection object to connect to the MySQL database with the specified settings
+     * @throws SQLException if an error occurs while establishing the connection
+     */
+    public static Connection getConnection(Boolean doAutoCommit, Integer isolationLevel) throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        connection.setAutoCommit(doAutoCommit);
+        connection.setTransactionIsolation(isolationLevel);
+        return connection;
+    }
+
+    //TODO: update every class using this method to include rollback
 
     /**
      * Executes an update SQL statement using the given Connection, SQL query, and optional parameters.
