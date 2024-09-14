@@ -3,7 +3,6 @@ package org.application.dbairline;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.application.dbairline.controller.GUIManager;
-import org.application.dbairline.model.data.DAUtility;
 
 public class App extends Application {
 

@@ -1,6 +1,5 @@
 package org.application.dbairline.model.data.tables;
 
-import java.security.InvalidParameterException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -5,10 +5,8 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.application.dbairline.App;
-import org.application.dbairline.model.data.DAUtility;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class GUIManager {

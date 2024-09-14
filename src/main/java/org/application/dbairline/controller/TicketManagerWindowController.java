@@ -12,7 +12,9 @@ import javafx.stage.Stage;
 import org.application.dbairline.App;
 import org.application.dbairline.model.data.DAUtility;
 import org.application.dbairline.model.data.Queries;
-import org.application.dbairline.model.data.tables.*;
+import org.application.dbairline.model.data.tables.Acquisto;
+import org.application.dbairline.model.data.tables.Biglietto;
+import org.application.dbairline.model.data.tables.Volo;
 
 import java.net.URL;
 import java.sql.Connection;

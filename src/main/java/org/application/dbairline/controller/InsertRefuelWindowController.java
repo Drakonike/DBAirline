@@ -6,8 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.application.dbairline.model.data.Queries;
 import org.application.dbairline.model.data.DAUtility;
+import org.application.dbairline.model.data.Queries;
 
 import java.net.URL;
 import java.sql.Connection;

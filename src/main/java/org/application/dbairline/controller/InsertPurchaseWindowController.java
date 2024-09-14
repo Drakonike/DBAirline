@@ -12,7 +12,10 @@ import org.application.dbairline.model.data.Queries;
 import org.application.dbairline.model.data.tables.*;
 
 import java.net.URL;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
