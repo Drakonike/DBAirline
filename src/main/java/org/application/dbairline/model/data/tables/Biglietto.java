@@ -11,7 +11,6 @@ import java.util.List;
  */
 public class Biglietto {
     private int idBiglietto;
-    private int numeroDiVolo;
     private String nomePasseggero;
     private int idAcquisto;
     private float prezzo;
@@ -24,10 +23,9 @@ public class Biglietto {
      * The Biglietto class represents a ticket object with various properties such as ticket id, flight number, passenger name,
      * purchase id, price, flight id, configuration id, and seat number.
      */
-    public Biglietto(int idBiglietto, int numeroDiVolo, String nomePasseggero, int idAcquisto, float prezzo,
+    public Biglietto(int idBiglietto, String nomePasseggero, int idAcquisto, float prezzo,
                      int idVolo, int idConfigurazione, String numeroPosto) {
         this.idBiglietto = idBiglietto;
-        this.numeroDiVolo = numeroDiVolo;
         this.nomePasseggero = nomePasseggero;
         this.idAcquisto = idAcquisto;
         this.prezzo = prezzo;
@@ -37,10 +35,9 @@ public class Biglietto {
         this.nomeClasse = null;
     }
 
-    public Biglietto(int idBiglietto, int numeroDiVolo, String nomePasseggero, int idAcquisto, float prezzo,
+    public Biglietto(int idBiglietto, String nomePasseggero, int idAcquisto, float prezzo,
                      int idVolo, int idConfigurazione, String numeroPosto, String nomeCLasse) {
         this.idBiglietto = idBiglietto;
-        this.numeroDiVolo = numeroDiVolo;
         this.nomePasseggero = nomePasseggero;
         this.idAcquisto = idAcquisto;
         this.prezzo = prezzo;
@@ -62,7 +59,6 @@ public class Biglietto {
             while (resultSet.next()) {
                 list.add(new Biglietto(
                         resultSet.getInt("IdBiglietto"),
-                        resultSet.getInt("NumeroDiVolo"),
                         resultSet.getString("NomePasseggero"),
                         resultSet.getInt("IdAcquisto"),
                         resultSet.getFloat("Prezzo"),
@@ -81,7 +77,6 @@ public class Biglietto {
         while (resultSet.next()) {
             list.add(new Biglietto(
                     resultSet.getInt("IdBiglietto"),
-                    resultSet.getInt("NumeroDiVolo"),
                     resultSet.getString("NomePasseggero"),
                     resultSet.getInt("IdAcquisto"),
                     resultSet.getFloat("Prezzo"),
@@ -95,10 +90,6 @@ public class Biglietto {
 
     public int getIdBiglietto() {
         return idBiglietto;
-    }
-
-    public int getNumeroDiVolo() {
-        return numeroDiVolo;
     }
 
     public String getNomePasseggero() {

@@ -22,7 +22,7 @@ import static org.application.dbairline.model.data.tables.Dipendente.ROLES;
 
 public class InsertEmployeeWindowController implements Initializable {
 
-    private MainWindowController parentController;
+    private WindowController parentController;
 
     @FXML
     private ChoiceBox<String> rankChoiceBox;
@@ -124,9 +124,9 @@ public class InsertEmployeeWindowController implements Initializable {
         rankChoiceBox.setItems(FXCollections.observableList(RANKS));
     }
 
-    public int prepare(MainWindowController mainWindowController) {
-        if (mainWindowController != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller) {
+        if (Controller != null) {
+            this.parentController = Controller;
             return 0;
         } else {
             return 1;

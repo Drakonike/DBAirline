@@ -21,7 +21,7 @@ public class InsertItineraryWindowController implements Initializable {
     public static final int ZERO = 0;
     public static final int LIMIT = 10000;
 
-    private MainWindowController parentController;
+    private WindowController parentController;
 
     @FXML
     private Button closeButton = new Button();
@@ -80,9 +80,9 @@ public class InsertItineraryWindowController implements Initializable {
         itineraryTypeCB.setItems(FXCollections.observableList(ITINERARY_TYPES));
     }
 
-    public int prepare(MainWindowController mainWindowController) {
-        if (mainWindowController != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller) {
+        if (Controller != null) {
+            this.parentController = Controller;
             return 0;
         } else {
             return 1;

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="MainWindow" prefHeight="800.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.dbairline.controller.DispatcherWindowController">
+  <children>
+      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Itinerari e aeroporti">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <VBox>
+                           <children>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <VBox>
+                                       <children>
+                                          <Label text="Itinerari">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                          </Label>
+                                          <TableView fx:id="itinerariesTable" prefWidth="300.0">
+                                            <columns>
+                                              <TableColumn fx:id="itinerariesFlightNumCol" prefWidth="150.0" text="Numero di volo" />
+                                              <TableColumn fx:id="itinerariesFlightTypeCol" prefWidth="150.0" text="Tipo" />
+                                            </columns>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                          </TableView>
+                                          <Button mnemonicParsing="false" onMouseClicked="#insertItinerary" text="Inserisci itinerario" translateX="10.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox>
+                                       <children>
+                                          <Label text="Tratte" />
+                                          <TableView fx:id="flightLegsTable" prefWidth="300.0">
+                                             <columns>
+                                                <TableColumn fx:id="flightLegslegNumberColumn" prefWidth="100.0" text="Numero tratta" />
+                                                <TableColumn fx:id="flightLegsDepartureColumn" prefWidth="100.0" text="Partenza" />
+                                                <TableColumn fx:id="flightLegsArrivalColumn" prefWidth="100.0" text="Destinazione" />
+                                             </columns>
+                                          </TableView>
+                                          <Button mnemonicParsing="false" onMouseClicked="#insertLeg" text="Inserisci tratta" translateX="10.0" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </padding>
+                              </HBox>
+                              <VBox>
+                                 <children>
+                                    <Label text="Aeroporti" />
+                                    <HBox>
+                                       <children>
+                                          <VBox>
+                                             <children>
+                                                <TableView fx:id="airportsTable" prefHeight="250.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="airportsICAOCodeColumn" prefWidth="100.0" text="ICAO" />
+                                                    <TableColumn fx:id="airportsIATACodeColumn" prefWidth="100.0" text="IATA" />
+                                                      <TableColumn fx:id="airportsCommercialNameColumn" prefWidth="100.0" text="Nome Commerciale" />
+                                                      <TableColumn fx:id="airportsCityColumn" prefWidth="100.0" text="Città" />
+                                                       <TableColumn fx:id="airportsCountryColumn" prefWidth="100.0" text="Nazione" />
+                                                      <TableColumn fx:id="airportsManagerColumn" prefWidth="100.0" text="Gestore" />
+                                                      <TableColumn fx:id="airportsManagerContactColumn" prefWidth="100.0" text="Contatto gestore" />
+                                                      <TableColumn fx:id="airportsTelephoneColumn" prefWidth="100.0" text="Telefono" />
+                                                      <TableColumn fx:id="airportsFaxNumberColumn" prefWidth="100.0" text="Fax" />
+                                                  </columns>
+                                                </TableView>
+                                                <Button mnemonicParsing="false" onMouseClicked="#insertAirport" text="Inserisci aeroporto" translateX="10.0" />
+                                             </children>
+                                          </VBox>
+                                          <Pane layoutX="876.0" layoutY="10.0" prefHeight="200.0" prefWidth="50.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
+          <Tab text="Voli e rifornimenti">
+               <content>
+                  <HBox prefHeight="791.0" prefWidth="1441.0">
+                     <children>
+                        <VBox prefHeight="791.0" prefWidth="1428.0">
+                           <children>
+                              <VBox prefHeight="516.0" prefWidth="1442.0">
+                                 <children>
+                                    <Label text="VolI">
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TableView id="FlightsTable" fx:id="flightsTable" maxHeight="800.0" prefHeight="472.0" prefWidth="721.0">
+                                       <columns>
+                                          <TableColumn fx:id="flightIdCol" minWidth="-1.0" prefWidth="115.0" resizable="false" text="Id" />
+                                          <TableColumn fx:id="flightFlightNumCol" minWidth="-1.0" prefWidth="115.0" resizable="false" text="NumVolo" />
+                                          <TableColumn fx:id="flightDepCol" minWidth="-1.0" prefWidth="100.0" text="Partenza" />
+                                          <TableColumn fx:id="flightArrCol" minWidth="-1.0" prefWidth="100.0" text="Destinazione" />
+                                          <TableColumn fx:id="flightProgDepTimeCol" minWidth="-1.0" prefWidth="100.0" text="Orario partenza programmato" />
+                                          <TableColumn fx:id="flightEffDepTimeCol" minWidth="0.0" prefWidth="0.0" text="Orario partenza effettivo" />
+                                          <TableColumn fx:id="flightProgDesTimeCol" minWidth="9.0" prefWidth="235.0" text="Orario destinazione programmato" />
+                                          <TableColumn fx:id="flightEffDesTimeCol" minWidth="0.0" prefWidth="2.0" text="Orario destinazione effettivo" />
+                                          <TableColumn fx:id="flightAircraftCol" prefWidth="100.0" text="Aereo" />
+                                          <TableColumn fx:id="flightAircraftConfigCol" prefWidth="100.0" text="Configurazione" />
+                                          <TableColumn fx:id="flightAltAirportCol" prefWidth="120.0" text="AeroportoAlternativ" />
+                                          <TableColumn fx:id="flightCancelledCol" prefWidth="109.0" text="VoloCancellato" />
+                                       </columns>
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                    <FlowPane alignment="CENTER" hgap="10.0" prefHeight="27.0" prefWidth="701.0">
+                                       <children>
+                                          <Button id="InsertNewFlight" mnemonicParsing="false" onMouseClicked="#insertFlight" text="Inserisci volo">
+                                             <FlowPane.margin>
+                                                <Insets />
+                                             </FlowPane.margin>
+                                          </Button>
+                                          <Button id="InsertNewFlight" layoutX="513.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#modifyFlight" text="Modifica volo" />
+                                          <Button id="InsertNewFlight" mnemonicParsing="false" onMouseClicked="#insertRefuel" text="Inserisci rifonimento" />
+                                          <Button id="InsertNewFlight" layoutX="600.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#modifyCabinCrew" text="Modifica Equipaggio di volo" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets left="30.0" top="10.0" />
+                                       </VBox.margin>
+                                    </FlowPane>
+                                 </children>
+                              </VBox>
+                              <HBox layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="1246.0">
+                                 <children>
+                                    <VBox>
+                                       <children>
+                                          <Label text="Rifornimenti">
+                                             <VBox.margin>
+                                                <Insets left="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <TableView id="FlightsTable" fx:id="refuelsTable">
+                                             <columns>
+                                                <TableColumn fx:id="refuelsFlightIdColumn" minWidth="-1.0" prefWidth="120.0" resizable="false" text="IdVolo" />
+                                                <TableColumn fx:id="refuelsFuelTypeColumn" minWidth="-1.0" prefWidth="120.0" text="Tipo di carburante" />
+                                                <TableColumn fx:id="refuelsQuantityColumn" minWidth="-1.0" prefWidth="120.0" text="Quantità" />
+                                                <TableColumn fx:id="refuelsCostColumn" minWidth="-1.0" prefWidth="120.0" text="Costo" />
+                                             </columns>
+                                             <VBox.margin>
+                                                <Insets left="10.0" />
+                                             </VBox.margin>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+  </children>
+</VBox>

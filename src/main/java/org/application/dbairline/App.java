@@ -2,16 +2,15 @@ package org.application.dbairline;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.application.dbairline.controller.WindowManager;
-
-import java.util.Arrays;
+import org.application.dbairline.controller.GUIManager;
+import org.application.dbairline.model.data.DAUtility;
 
 public class App extends Application {
 
     @Override
     public void start(Stage stage) {
         try {
-            new WindowManager(stage);
+            new GUIManager(stage);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

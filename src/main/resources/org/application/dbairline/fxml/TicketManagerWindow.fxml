@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="MainWindow" prefHeight="800.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.dbairline.controller.TicketManagerWindowController">
+  <children>
+      <HBox prefHeight="516.0" prefWidth="1246.0">
+         <children>
+            <VBox prefHeight="516.0" prefWidth="1442.0">
+               <children>
+                  <Label text="VolI">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TableView id="FlightsTable" fx:id="flightsTable" maxHeight="800.0" prefHeight="472.0" prefWidth="721.0">
+                     <columns>
+                        <TableColumn fx:id="flightIdCol" minWidth="-1.0" prefWidth="115.0" resizable="false" text="Id" />
+                        <TableColumn fx:id="flightFlightNumCol" minWidth="-1.0" prefWidth="115.0" resizable="false" text="NumVolo" />
+                        <TableColumn fx:id="flightDepCol" minWidth="-1.0" prefWidth="100.0" text="Partenza" />
+                        <TableColumn fx:id="flightArrCol" minWidth="-1.0" prefWidth="100.0" text="Destinazione" />
+                        <TableColumn fx:id="flightProgDepTimeCol" minWidth="-1.0" prefWidth="100.0" text="Orario partenza programmato" />
+                        <TableColumn fx:id="flightEffDepTimeCol" minWidth="0.0" prefWidth="0.0" text="Orario partenza effettivo" />
+                        <TableColumn fx:id="flightProgDesTimeCol" minWidth="9.0" prefWidth="235.0" text="Orario destinazione programmato" />
+                        <TableColumn fx:id="flightEffDesTimeCol" minWidth="0.0" prefWidth="2.0" text="Orario destinazione effettivo" />
+                        <TableColumn fx:id="flightAircraftCol" prefWidth="100.0" text="Aereo" />
+                        <TableColumn fx:id="flightAircraftConfigCol" prefWidth="100.0" text="Configurazione" />
+                        <TableColumn fx:id="flightAltAirportCol" prefWidth="120.0" text="AeroportoAlternativ" />
+                        <TableColumn fx:id="flightCancelledCol" prefWidth="109.0" text="VoloCancellato" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox>
+         <children>
+            <VBox>
+               <children>
+                  <Label text="Acquisti" />
+                  <TableView fx:id="purchasesTable">
+                     <columns>
+                        <TableColumn fx:id="purchasesIdColumn" prefWidth="100.0" text="Id" />
+                        <TableColumn fx:id="purchasesDateColumn" prefWidth="100.0" text="Data" />
+                        <TableColumn fx:id="purchasesImportColumn" prefWidth="100.0" text="importo" />
+                        <TableColumn fx:id="purchasesPurchaserNameColumn" prefWidth="100.0" text="Nome Acquirente" />
+                        <TableColumn fx:id="purchasesPurchaserEmailColumn" prefWidth="100.0" text="Email acquirente" />
+                        <TableColumn fx:id="purchasesPurchaserTelephoneNumberColumn" prefWidth="100.0" text="Telefono acquirente" />
+                     </columns>
+                  </TableView>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="400.0" />
+                        <VBox prefHeight="100.0" prefWidth="129.0">
+                           <children>
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#insertPurchase" prefHeight="25.0" prefWidth="115.0" text="Inserisci acquisto" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="10.0">
+               <children>
+                  <Label text="Biglietti" />
+                  <TableView fx:id="ticketsTable">
+                     <columns>
+                        <TableColumn fx:id="ticketsIdColumn" prefWidth="100.0" text="Id" />
+                        <TableColumn fx:id="ticketsFlightIdColumn" prefWidth="100.0" text="Id volo" />
+                        <TableColumn fx:id="ticketsFlightClassNameColumn" prefWidth="100.0" text="Classe di volo" />
+                        <TableColumn fx:id="ticketsSeatNumberColumn" prefWidth="100.0" text="Posto" />
+                        <TableColumn fx:id="ticketsPurchaseIdColumn" prefWidth="100.0" text="IdAcquisto" />
+                        <TableColumn fx:id="ticketsPriceColumn" prefWidth="100.0" text="Prezzo" />
+                        <TableColumn fx:id="ticketsPaxNameColumn" prefWidth="100.0" text="Nome passeggero" />
+                     </columns>
+                            </TableView>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="134.0" />
+                        <VBox prefHeight="100.0" prefWidth="129.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets left="10.0" />
+         </VBox.margin>
+      </HBox>
+  </children>
+</VBox>

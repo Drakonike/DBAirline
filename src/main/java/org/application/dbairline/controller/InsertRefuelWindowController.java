@@ -35,7 +35,7 @@ public class InsertRefuelWindowController implements Initializable {
 
     @FXML
     private TextField quantityTF;
-    private MainWindowController parentController;
+    private WindowController parentController;
     private int flightId;
 
     @FXML
@@ -88,9 +88,9 @@ public class InsertRefuelWindowController implements Initializable {
 
     }
 
-    public int prepare(MainWindowController mainWindowController, Integer flightId) {
-        if (mainWindowController != null && flightId != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller, Integer flightId) {
+        if (Controller != null && flightId != null) {
+            this.parentController = Controller;
             this.flightId = flightId;
             idFlightLabel.setText(String.valueOf(flightId));
             return 0;

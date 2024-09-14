@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class ModifyCrewWindowController implements Initializable {
 
-    private MainWindowController parentController;
+    private WindowController parentController;
     private int flightId;
     private ObservableList<Dipendente> assignedEmployees;
     private ObservableList<Dipendente> assigningEmployees;
@@ -81,14 +81,14 @@ public class ModifyCrewWindowController implements Initializable {
         try {
             int res = 0;
             Connection conn = DAUtility.getConnection();
-            String deleteSQL = "DELETE FROM ASSEGNAZIONI WHERE IdDipendente = ? AND IdVolo = ?";
+            String deleteSQL = "DELETE FROM equipaggi WHERE IdDipendente = ? AND IdVolo = ?";
 
             for (Dipendente employee : assignedEmployees) {
                 res = DAUtility.executeUpdate(conn, deleteSQL, employee.getIdDipendente(), flightId);
             }
 
             for (Dipendente employee : tmp) {
-                res = DAUtility.executeUpdate(conn, Queries.Insertions.ASSEGNAZIONI, employee.getIdDipendente(), flightId);
+                res = DAUtility.executeUpdate(conn, Queries.Insertions.EQUIPAGGI, employee.getIdDipendente(), flightId);
             }
 
             conn.close();
@@ -146,15 +146,15 @@ public class ModifyCrewWindowController implements Initializable {
 
     }
 
-    public int prepare(MainWindowController mainWindowController, Integer idVolo) {
-        if (mainWindowController == null || idVolo == null) {
+    public int prepare(WindowController Controller, Integer idVolo) {
+        if (Controller == null || idVolo == null) {
             return 1;
         } else {
-            this.parentController = mainWindowController;
+            this.parentController = Controller;
             this.flightId = idVolo;
             try {
                 Connection conn = DAUtility.getConnection();
-                String query = "SELECT d.* FROM dipendenti d, assegnazioni a WHERE d.IdDipendente = a.IdDipendente AND a.IdVolo = ?";
+                String query = "SELECT d.* FROM dipendenti d, equipaggi a WHERE d.IdDipendente = a.IdDipendente AND a.IdVolo = ?";
                 assignedEmployees.addAll(FXCollections.observableList(Dipendente.mapTo(DAUtility.executeQuery(conn, query, this.flightId))));
                 deployableEmployees.addAll(FXCollections.observableList(Dipendente.mapTo(DAUtility.executeQuery(conn, Queries.SelectAll.DIPENDENTI))));
                 conn.close();

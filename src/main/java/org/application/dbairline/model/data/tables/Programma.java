@@ -18,7 +18,6 @@ public class Programma {
     private int numeroTratta;
     private String giorno;
     private Time oraPartenza;
-    private Time tempoDIPercorrenza;
     private int idConfigurazione;
 
 
@@ -29,16 +28,13 @@ public class Programma {
      * @param numeroTratta       The leg number.
      * @param giorno             The day of the week for the schedule.
      * @param oraPartenza        The departure time.
-     * @param tempoDIPercorrenza The travel time.
      * @param idConfigurazione   The configuration id.
      */
-    public Programma(int numeroDiVolo, int numeroTratta, String giorno, Time oraPartenza, Time tempoDIPercorrenza,
-                     int idConfigurazione) {
+    public Programma(int numeroDiVolo, int numeroTratta, String giorno, Time oraPartenza, int idConfigurazione) {
         this.numeroDiVolo = numeroDiVolo;
         this.numeroTratta = numeroTratta;
         this.giorno = giorno;
         this.oraPartenza = oraPartenza;
-        this.tempoDIPercorrenza = tempoDIPercorrenza;
         this.idConfigurazione = idConfigurazione;
     }
 
@@ -56,7 +52,6 @@ public class Programma {
                     resultSet.getInt("NumeroTratta"),
                     resultSet.getString("Giorno"),
                     resultSet.getTime("OraPartenza"),
-                    resultSet.getTime("TempoDiPercorrenza"),
                     resultSet.getInt("IdConfigurazione")));
         }
         return list;
@@ -76,10 +71,6 @@ public class Programma {
 
     public Time getOraPartenza() {
         return oraPartenza;
-    }
-
-    public Time getTempoDIPercorrenza() {
-        return tempoDIPercorrenza;
     }
 
     public int getIdConfigurazione() {

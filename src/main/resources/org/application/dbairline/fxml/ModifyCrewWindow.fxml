@@ -53,7 +53,7 @@
             </Button>
             <HBox alignment="CENTER" spacing="50.0">
                <children>
-                  <Button fx:id="insertButton" mnemonicParsing="false" onMouseClicked="#insert" text="Inserisci" />
+                  <Button fx:id="insertButton" mnemonicParsing="false" onMouseClicked="#insert" text="Modifica" />
                   <Button fx:id="closeButton" mnemonicParsing="false" onMouseClicked="#exitWindow" text="Cancella" />
                </children>
                <padding>

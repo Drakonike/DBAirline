@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class InsertFlightClasslWindowController {
 
-    private MainWindowController parentController;
+    private WindowController parentController;
 
     @FXML
     private Button closeButton;
@@ -52,9 +52,9 @@ public class InsertFlightClasslWindowController {
         }
     }
 
-    public int prepare(MainWindowController mainWindowController) {
-        if (mainWindowController != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller) {
+        if (Controller != null) {
+            this.parentController = Controller;
             return 0;
         } else {
             return 1;

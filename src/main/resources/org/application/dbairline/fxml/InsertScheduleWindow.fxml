@@ -21,29 +21,21 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <ChoiceBox fx:id="FlightNumCB" layoutX="10.0" layoutY="60.0" prefWidth="150.0" GridPane.columnIndex="1" />
                         <ChoiceBox fx:id="legNumCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Numero di volo" />
                         <Label text="Numero tratta" GridPane.rowIndex="1" />
-                        <Label layoutX="20.0" layoutY="27.0" text="Configurazione posti" GridPane.rowIndex="5" />
+                        <Label layoutX="20.0" layoutY="27.0" text="Configurazione posti" GridPane.rowIndex="4" />
                         <Label layoutX="20.0" layoutY="27.0" text="Ora partenza" GridPane.rowIndex="3" />
                         <Label layoutX="20.0" layoutY="27.0" text="Giorno" GridPane.rowIndex="2" />
-                        <ChoiceBox fx:id="seatConfigCB" layoutX="160.0" layoutY="53.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <ChoiceBox fx:id="seatConfigCB" layoutX="160.0" layoutY="53.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <ChoiceBox fx:id="dayCB" layoutX="160.0" layoutY="53.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
                               <ChoiceBox fx:id="departureHourCB" prefWidth="150.0" />
                               <ChoiceBox fx:id="departureMinuteCB" prefWidth="150.0" />
-                           </children>
-                        </HBox>
-                        <Label layoutX="20.0" layoutY="117.0" text="Ora partenza" GridPane.rowIndex="4" />
-                        <HBox alignment="CENTER" layoutX="160.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <children>
-                              <ChoiceBox fx:id="flightTimeHoursCB" prefWidth="150.0" />
-                              <ChoiceBox fx:id="flightTimeMinutesCB" prefWidth="150.0" />
                            </children>
                         </HBox>
                      </children>
@@ -53,9 +45,9 @@
                   </GridPane>
                   <HBox alignment="CENTER">
                      <children>
-                        <Button fx:id="insertButton" mnemonicParsing="false" onMouseClicked="#insert" text="Insert" />
+                        <Button fx:id="insertButton" mnemonicParsing="false" onMouseClicked="#insert" text="Inserisci" />
                         <Pane prefHeight="1.0" prefWidth="10.0" />
-                        <Button fx:id="closeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#exitWindow" text="Cancel" />
+                        <Button fx:id="closeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#exitWindow" text="Cancella" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" />

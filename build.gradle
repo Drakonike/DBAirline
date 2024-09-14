@@ -40,7 +40,7 @@ jlink {
 }
 
 mainClassName='org.application.dbairline.Launcher'
-/*
+
 jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
@@ -49,4 +49,4 @@ jar {
         attributes 'Main-Class': 'org.application.dbairline.Launcher'
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}*/
+}

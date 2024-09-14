@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class InsertFareWindowController implements Initializable {
 
-    private MainWindowController parentController;
+    private WindowController parentController;
     private List<Tratta> flightLegs;
     private List<Classe> flightClasses;
 
@@ -91,7 +91,7 @@ public class InsertFareWindowController implements Initializable {
             Connection conn = DAUtility.getConnection();
 
             if (endDateDP.isDisabled()) {
-                res = DAUtility.executeUpdate(conn, Queries.Insertions.TARIFFE_SENZA_DATAFINE,
+                res = DAUtility.executeUpdate(conn, Queries.Insertions.TARIFFE,
                         flightNumber,
                         legNumber,
                         flightCLassID,
@@ -99,7 +99,7 @@ public class InsertFareWindowController implements Initializable {
                         fare);
             } else {
                 Date endDate = Date.valueOf(endDateDP.getValue().toString());
-                res = DAUtility.executeUpdate(conn, Queries.Insertions.TARIFFE,
+                res = DAUtility.executeUpdate(conn, Queries.Insertions.TARIFFE_CON_DATAFINE,
                         flightNumber,
                         legNumber,
                         flightCLassID,
@@ -168,9 +168,9 @@ public class InsertFareWindowController implements Initializable {
         }
     }
 
-    public int prepare(MainWindowController mainWindowController) {
-        if (mainWindowController != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller) {
+        if (Controller != null) {
+            this.parentController = Controller;
             return 0;
         } else {
             return 1;

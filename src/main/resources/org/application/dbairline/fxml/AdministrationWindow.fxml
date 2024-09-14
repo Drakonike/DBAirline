@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="MainWindow" prefHeight="800.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.dbairline.controller.AdministrationWindowController">
+  <children>
+      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab text="Aerei e Configurazioni posti">
+               <content>
+                  <VBox>
+                     <children>
+                        <HBox>
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label text="Aerei" />
+                                    <TableView fx:id="aircrafstTable">
+                                      <columns>
+                                        <TableColumn fx:id="aircraftsRegistrationCodeColumn" prefWidth="100.0" text="Registrazione" />
+                                        <TableColumn fx:id="aircraftsTypeColumn" prefWidth="100.0" text="Modello" />
+                                          <TableColumn fx:id="aircraftsBuilderColumn" prefWidth="100.0" text="Costruttore" />
+                                          <TableColumn fx:id="aircraftsConfigurationIdColumn" prefWidth="100.0" text="Configurazione posti" />
+                                      </columns>
+                                    </TableView>
+                                    <Button mnemonicParsing="false" onMouseClicked="#insertAircraft" text="Inserisci Aereo" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox layoutX="10.0" layoutY="10.0">
+                                 <children>
+                                    <Label text="Configurazione posti" />
+                                    <TableView fx:id="seatsConfigurationsTable">
+                                      <columns>
+                                        <TableColumn fx:id="seatConfigurationsIdColumn" prefWidth="100.0" text="Id" />
+                                        <TableColumn fx:id="seatConfigurationsNameColumn" prefWidth="100.0" text="Nome" />
+                                          <TableColumn fx:id="seatConfigurationsCapacityColumn" prefWidth="100.0" text="Numero max posti" />
+                                      </columns>
+                                    </TableView>
+                                    <Button mnemonicParsing="false" onMouseClicked="#insertSeatConfig" text="Inserisci Configurazione" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox layoutX="487.0" layoutY="10.0">
+                                 <children>
+                                    <Label text="Posti" />
+                                    <TableView fx:id="seatsTable">
+                                       <columns>
+                                          <TableColumn fx:id="seatsNumberColumn" prefWidth="100.0" text="Numero" />
+                                          <TableColumn fx:id="seatsClassNameColumn" prefWidth="100.0" text="Classe" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label text="Classi">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TableView fx:id="travelClassesTable">
+                                       <columns>
+                                          <TableColumn fx:id="travelClassesIdColumn" prefWidth="100.0" text="Id" />
+                                          <TableColumn fx:id="travelClassesNameColumn" prefWidth="100.0" text="Nome" />
+                                       </columns>
+                                    </TableView>
+                                    <Button mnemonicParsing="false" onMouseClicked="#insertFlightClass" text="Inserisci Classe" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <Label text="Tariffe" />
+                                    <TableView fx:id="faresTable">
+                                       <columns>
+                                          <TableColumn fx:id="faresIdColumn" prefWidth="100.0" text="Id" />
+                                          <TableColumn fx:id="faresFlightNumberColumn" prefWidth="100.0" text="Numero di volo" />
+                                          <TableColumn fx:id="faresLegNumberColumn" prefWidth="100.0" text="Numero tratta" />
+                                          <TableColumn fx:id="faresFlightClassColumn" prefWidth="100.0" text="Classe" />
+                                          <TableColumn fx:id="faresValueColumn" prefWidth="100.0" text="Tariffa" />
+                                          <TableColumn fx:id="faresStartDateColumn" prefWidth="100.0" text="Data inizio" />
+                                          <TableColumn fx:id="faresEndDateColumn" prefWidth="100.0" text="Data fine" />
+                                       </columns>
+                                    </TableView>
+                                    <Button mnemonicParsing="false" onMouseClicked="#insertFare" text="Inserisci tariffa" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab text="Dipendenti">
+               <content>
+                  <VBox>
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label text="Dipendenti" />
+                              <TableView fx:id="employeesTable">
+                                 <columns>
+                                    <TableColumn fx:id="employeesIdColumn" prefWidth="100.0" text="Id" />
+                                    <TableColumn fx:id="employeesNameColumn" prefWidth="100.0" text="Nome" />
+                                    <TableColumn fx:id="employeesSurnameColumn" prefWidth="100.0" text="Cognome" />
+                                    <TableColumn fx:id="employeesNationalityColumn" prefWidth="100.0" text="Nazionalità" />
+                                    <TableColumn fx:id="employeesCityColumn" prefWidth="100.0" text="Città" />
+                                    <TableColumn fx:id="employeesAddressColumn" prefWidth="100.0" text="Indirizzo" />
+                                    <TableColumn fx:id="employeesTelephoneNumberColumn" prefWidth="100.0" text="Telefono" />
+                                    <TableColumn fx:id="employeesRoleColumn" prefWidth="100.0" text="Ruolo" />
+                                    <TableColumn fx:id="employeesRankColumn" prefWidth="100.0" text="Grado" />
+                                    <TableColumn fx:id="employeesSalaryColumn" prefWidth="100.0" text="Stipendio" />
+                                 </columns>
+                              </TableView>
+                              <Button mnemonicParsing="false" onMouseClicked="#insertEmployee" text="Inserisci Dipendente" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </padding>
+                        </VBox>
+                        <HBox>
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <Label text="Programmi" />
+                                    <TableView fx:id="schedulesTable">
+                                      <columns>
+                                        <TableColumn fx:id="schedulesFlightNumberColumn" prefWidth="100.0" text="Numero di volo" />
+                                        <TableColumn fx:id="schedulesLegNumberColumn" prefWidth="100.0" text="Numero tratta" />
+                                          <TableColumn fx:id="schedulesDayColumn" prefWidth="100.0" text="Giorno" />
+                                          <TableColumn fx:id="schedulesDepartureTimeColumn" prefWidth="100.0" text="Ora di partenza" />
+                                          <TableColumn fx:id="schedulesSeatConfigurationIdColumn" prefWidth="100.0" text="Configurazione" />
+                                      </columns>
+                                    </TableView>
+                                    <Button mnemonicParsing="false" onMouseClicked="#insertSchedule" text="Inserisci programma" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab text="Analisi">
+               <content>
+                  <VBox>
+                     <children>
+                        <HBox spacing="10.0">
+                           <children>
+                              <TableView fx:id="customizableTable" prefHeight="500.0" prefWidth="1000.0" />
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#rankingFrequentedItineraries" text="Classifica frequenza itinerari" />
+                                    <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#occupancyRateForClass" text="Tasso occupazione per  classe" />
+                                    <Button layoutX="10.0" layoutY="35.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#averageTicketsPerRoute" text="Media biglietti per tratta" />
+                                    <Button layoutX="10.0" layoutY="60.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#revenuePerRoute" text="Ricavi generati per tratta" />
+                                    <Button layoutX="10.0" layoutY="60.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#totalRevenue" text="Ricavi totali" />
+                                    <Button layoutX="10.0" layoutY="60.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#operatingCosts" text="Costi operativi" />
+                                    <Button layoutX="10.0" layoutY="60.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#netProfit" text="Profitto netto" />
+                                    <Pane prefHeight="10.0" prefWidth="200.0" />
+                                    <Label text="Data inizio" />
+                                    <DatePicker fx:id="startDatePicker" maxWidth="1.7976931348623157E308" />
+                                    <Label layoutX="10.0" layoutY="235.0" text="Data fine" />
+                                    <DatePicker fx:id="endDatePicker" layoutX="10.0" layoutY="235.0" maxWidth="1.7976931348623157E308" />
+                                 </children></VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+  </children>
+</VBox>

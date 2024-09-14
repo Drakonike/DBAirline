@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.application.dbairline.model.data.DAUtility;
@@ -19,24 +20,25 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.IntStream;
 
 public class InsertLegWindowController implements Initializable {
 
+    private WindowController parentController;
     private int flightNumber;
     private int legNumber;
 
     @FXML
     private Button closeButton;
-
     @FXML
     private Button insertButton;
-
     @FXML
     private ChoiceBox<String> legArrCB;
-
     @FXML
     private ChoiceBox<String> legDepCB;
-    private MainWindowController parentController;
+    @FXML
+    private TextField flightTimeTF;
+
 
     @FXML
     void exitWindow(MouseEvent event) {
@@ -44,17 +46,26 @@ public class InsertLegWindowController implements Initializable {
         stage.close();
     }
 
+    Integer flightTime;
+
     @FXML
     void insert(MouseEvent event) {
         String departure = legDepCB.getValue();
         String arrival = legArrCB.getValue();
+        try {
+            flightTime = Integer.parseInt(flightTimeTF.getText());
+        } catch (NumberFormatException e) {
+            showErrorAlert("Errore di input", "Inserire un numero valido nel campo \"Tempo di percorrenza\".");
+            return;
+        }
+
         if (departure != null && arrival != null) {
             try {
                 Connection conn = DAUtility.getConnection();
-                int res = DAUtility.executeUpdate(conn, Queries.Insertions.TRATTE, flightNumber, legNumber, departure, arrival);
+                int res = DAUtility.executeUpdate(conn, Queries.Insertions.TRATTE, flightNumber, legNumber, departure, arrival, flightTime);
                 conn.close();
                 if (res == 0) {
-                    showErrorAlert("Errore del database", "Inserzione fallita.");
+                    showErrorAlert("Errore del database", "Elemento già presente in database.");
                     return;
                 }
 
@@ -64,7 +75,6 @@ public class InsertLegWindowController implements Initializable {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
                 showErrorAlert("Errore del database", "Inserzione fallita.");
-                throw new RuntimeException(e);
             }
         }
 
@@ -80,6 +90,7 @@ public class InsertLegWindowController implements Initializable {
                 legDepCB.setItems(FXCollections.observableArrayList(airports));
                 legArrCB.setItems(FXCollections.observableArrayList(airports));
             }
+
         } catch (SQLException e) {
             showErrorAlert("Errore di caricamento", "Impossibile caricare finestra.");
             throw new RuntimeException(e);
@@ -97,9 +108,9 @@ public class InsertLegWindowController implements Initializable {
         return airports;
     }
 
-    public int prepare(MainWindowController mainWindowController, Integer flightNumber) {
-        if (mainWindowController != null && flightNumber != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller, Integer flightNumber) {
+        if (Controller != null && flightNumber != null) {
+            this.parentController = Controller;
             this.flightNumber = flightNumber;
             this.getLegNumbers();
             return 0;

@@ -12,15 +12,17 @@ public class Tratta {
     private int numeroTratta;
     private String partenza;
     private String destinazione;
+    private int tempoDiPercorrenza;
 
     /**
      * Class representing a flight segment.
      */
-    public Tratta(int numeroDiVolo, int numeroTratta, String partenza, String destinazione) {
+    public Tratta(int numeroDiVolo, int numeroTratta, String partenza, String destinazione, int tempoDiPercorrenza) {
         this.numeroDiVolo = numeroDiVolo;
         this.numeroTratta = numeroTratta;
         this.partenza = partenza;
         this.destinazione = destinazione;
+        this.tempoDiPercorrenza = tempoDiPercorrenza;
     }
 
     /**
@@ -36,7 +38,8 @@ public class Tratta {
                     resultSet.getInt("numeroDiVolo"),
                     resultSet.getInt("numeroTratta"),
                     resultSet.getString("partenza"),
-                    resultSet.getString("destinazione")));
+                    resultSet.getString("destinazione"),
+                    resultSet.getInt("tempoDiPercorrenza")));
         }
         return list;
     }
@@ -71,5 +74,13 @@ public class Tratta {
 
     public void setDestinazione(String destinazione) {
         this.destinazione = destinazione;
+    }
+
+    public int getTempoDiPercorrenza() {
+        return tempoDiPercorrenza;
+    }
+
+    public void setTempoDiPercorrenza(int tempoDiPercorrenza) {
+        this.tempoDiPercorrenza = tempoDiPercorrenza;
     }
 }

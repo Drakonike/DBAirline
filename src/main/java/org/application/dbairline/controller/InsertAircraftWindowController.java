@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class InsertAircraftWindowController implements Initializable {
 
-    private MainWindowController parentController;
+    private WindowController parentController;
     private List<Configurazione> seatConfigurationsCache;
 
     @FXML
@@ -121,9 +121,9 @@ public class InsertAircraftWindowController implements Initializable {
         }
     }
 
-    public int prepare(MainWindowController mainWindowController) {
-        if (mainWindowController != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller) {
+        if (Controller != null) {
+            this.parentController = Controller;
             return 0;
         } else {
             return 1;

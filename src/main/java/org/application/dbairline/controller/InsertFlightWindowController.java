@@ -3,10 +3,7 @@ package org.application.dbairline.controller;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.application.dbairline.model.data.Queries;
@@ -21,13 +18,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 public class InsertFlightWindowController implements Initializable {
 
     public static final String NO_AIRCRAFT = "Nessuno";
 
-    private MainWindowController parentController;
+    private WindowController parentController;
     private List<Configurazione> seatConfigurations;
     private List<Tratta> legs;
     private List<Aereo> aicrafts;
@@ -63,6 +61,9 @@ public class InsertFlightWindowController implements Initializable {
     private ChoiceBox<String> aircraftConfigCB = new ChoiceBox<>();
 
     @FXML
+    private CheckBox autoArrTimeCheckbox = new CheckBox();
+
+    @FXML
     private Button insertButton;
 
     @FXML
@@ -78,21 +79,16 @@ public class InsertFlightWindowController implements Initializable {
     void insertFlight(MouseEvent event) {
         Integer flightNumber = flightNumberCB.getSelectionModel().getSelectedItem();
         Integer legNumber = legNumberCB.getSelectionModel().getSelectedItem();
-
-        LocalDate departureDatePickerValue = departureDatePicker.getValue();
-        Integer departureHour = departureHourCB.getSelectionModel().getSelectedItem();
-        Integer departureMinute = departureMinuteCB.getSelectionModel().getSelectedItem();
-        LocalDate arrivalDatePickerValue = arrivalDatePicker.getValue();
-        Integer arrivalHour = arrivalHourCB.getSelectionModel().getSelectedItem();
-        Integer arrivalMinute = arrivalMinuteCB.getSelectionModel().getSelectedItem();
-
         String aircraft = aircraftCB.getSelectionModel().getSelectedItem();
         String seatConfigName = aircraftConfigCB.getSelectionModel().getSelectedItem();
 
+        LocalDate departureDatePickerValue = departureDatePicker.getValue();
+
+        Integer departureHour = departureHourCB.getSelectionModel().getSelectedItem();
+        Integer departureMinute = departureMinuteCB.getSelectionModel().getSelectedItem();
 
         if (flightNumber == null || legNumber == null || departureDatePickerValue == null ||
-            departureHour == null || departureMinute == null || arrivalDatePickerValue == null ||
-            arrivalHour == null || arrivalMinute == null || aircraft == null || seatConfigName == null) {
+            departureHour == null || departureMinute == null || aircraft == null || seatConfigName == null) {
             showErrorAlert("Errore di input",
                     "Si prega di compilare tutti i campi prima di procedere.");
             return;
@@ -103,8 +99,39 @@ public class InsertFlightWindowController implements Initializable {
                 .map(Configurazione::getIdConfigurazione)
                 .toList()
                 .getFirst();
+
         Timestamp departureDate = Timestamp.valueOf(departureDatePickerValue.atTime(departureHour, departureMinute));
-        Timestamp arrivalDate = Timestamp.valueOf(arrivalDatePickerValue.atTime(departureHour, departureMinute));
+        Timestamp arrivalDate = new Timestamp(0);
+
+        if (!autoArrTimeCheckbox.isSelected()) {
+            LocalDate arrivalDatePickerValue = arrivalDatePicker.getValue();
+            Integer arrivalHour = arrivalHourCB.getSelectionModel().getSelectedItem();
+            Integer arrivalMinute = arrivalMinuteCB.getSelectionModel().getSelectedItem();
+            if (arrivalDatePickerValue == null || arrivalHour == null || arrivalMinute == null) {
+                showErrorAlert("Errore di input",
+                        "Si prega di compilare tutti i campi prima di procedere.");
+                return;
+            } else {
+                arrivalDate = Timestamp.valueOf(arrivalDatePickerValue.atTime(arrivalHour, arrivalMinute));
+            }
+        } else {
+            try {
+                Connection conn = DAUtility.getConnection();
+                String SQLQuery = "SELECT TempoDiPercorrenza FROM tratte WHERE NumeroDiVolo = " + flightNumber + " AND NumeroTratta = " + legNumber;
+                ResultSet rs = DAUtility.executeQuery(conn, SQLQuery);
+                int travelTime = -1;
+                if (rs.next()) {
+                    travelTime = rs.getInt("TempoDiPercorrenza");
+                } else {
+
+                }
+                conn.close();
+                arrivalDate.setTime(departureDate.getTime() + TimeUnit.MINUTES.toMillis(travelTime));
+            } catch (Exception e) {
+                showErrorAlert("Errore del database", "Inserzione fallita.");
+                return;
+            }
+        }
 
         if (arrivalDate.before(departureDate)) {
             showErrorAlert("Errore di input",
@@ -135,12 +162,12 @@ public class InsertFlightWindowController implements Initializable {
                         aircraftConfig);
             }
 
-            conn.close();
             if (res == 0) {
                 showErrorAlert("Errore del database", "Inserzione fallita.");
                 return;
             }
 
+            conn.close();
             parentController.refreshTableViews();
             Stage stage = (Stage) insertButton.getScene().getWindow();
             stage.close();
@@ -148,6 +175,13 @@ public class InsertFlightWindowController implements Initializable {
             System.out.println(e.getMessage());
             showErrorAlert("Errore del database", "Inserzione fallita.");
         }
+    }
+
+    @FXML
+    void disableArrTimePicker(MouseEvent event) {
+        arrivalDatePicker.setDisable(!arrivalDatePicker.isDisabled());
+        arrivalHourCB.setDisable(!arrivalHourCB.isDisabled());
+        arrivalMinuteCB.setDisable(!arrivalMinuteCB.isDisabled());
     }
 
     @Override
@@ -193,9 +227,9 @@ public class InsertFlightWindowController implements Initializable {
         });
     }
 
-    public int prepare(MainWindowController mainWindowController) {
-        if (mainWindowController != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller) {
+        if (Controller != null) {
+            this.parentController = Controller;
             return 0;
         } else {
             return 1;

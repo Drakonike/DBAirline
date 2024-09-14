@@ -27,28 +27,24 @@ import static org.application.dbairline.model.data.tables.Programma.DAYS;
 
 public class InsertScheduleWindowController implements Initializable {
 
-    private MainWindowController parentController;
+    private WindowController parentController;
     private List<Tratta> legs;
     private List<Configurazione> configurazioni;
 
     @FXML
+    private Button closeButton;
+    @FXML
+    private Button insertButton;
+    @FXML
     private ChoiceBox<Integer> FlightNumCB;
     @FXML
-    private Button closeButton;
+    private ChoiceBox<Integer> legNumCB;
     @FXML
     private ChoiceBox<String> dayCB;
     @FXML
     private ChoiceBox<Integer> departureHourCB;
     @FXML
-    private Button insertButton;
-    @FXML
-    private ChoiceBox<Integer> legNumCB;
-    @FXML
     private ChoiceBox<Integer> departureMinuteCB;
-    @FXML
-    private ChoiceBox<Integer> flightTimeHoursCB;
-    @FXML
-    private ChoiceBox<Integer> flightTimeMinutesCB;
     @FXML
     private ChoiceBox<String> seatConfigCB;
 
@@ -62,15 +58,12 @@ public class InsertScheduleWindowController implements Initializable {
     void insert(MouseEvent event) {
         Integer departureHour = departureHourCB.getSelectionModel().getSelectedItem();
         Integer departureMinute = departureMinuteCB.getSelectionModel().getSelectedItem();
-        Integer flightTimeHours = flightTimeHoursCB.getSelectionModel().getSelectedItem();
-        Integer flightTimeMinutes = flightTimeMinutesCB.getSelectionModel().getSelectedItem();
         String seatConfig = seatConfigCB.getValue();
         Integer flightNumber = FlightNumCB.getSelectionModel().getSelectedItem();
         Integer legNumber = legNumCB.getSelectionModel().getSelectedItem();
         String day = dayCB.getSelectionModel().getSelectedItem();
 
-        if (departureHour == null || departureMinute == null || flightTimeHours == null ||
-            flightTimeMinutes == null || seatConfig == null ||
+        if (departureHour == null || departureMinute == null || seatConfig == null ||
             flightNumber == null || legNumber == null || day == null) {
 
             showErrorAlert("Errore di input",
@@ -80,7 +73,6 @@ public class InsertScheduleWindowController implements Initializable {
 
 
         Time departureTime = Time.valueOf(LocalTime.of(departureHour, departureMinute));
-        Time flightTime = Time.valueOf(LocalTime.of(flightTimeHours, flightTimeMinutes));
 
         int idConfigurazione = configurazioni.stream()
                 .filter(config -> config.getNomeConfigurazione().equals(seatConfig))
@@ -95,7 +87,6 @@ public class InsertScheduleWindowController implements Initializable {
                     legNumber,
                     day,
                     departureTime,
-                    flightTime,
                     idConfigurazione);
 
             conn.close();
@@ -113,8 +104,13 @@ public class InsertScheduleWindowController implements Initializable {
         }
     }
 
-    public void prepare(MainWindowController mainWindowController) {
-        this.parentController = mainWindowController;
+    public int prepare(WindowController Controller) {
+        if (Controller != null) {
+            this.parentController = Controller;
+            return 0;
+        } else {
+            return 1;
+        }
     }
 
     @Override
@@ -135,8 +131,6 @@ public class InsertScheduleWindowController implements Initializable {
             dayCB.setItems(FXCollections.observableList(DAYS));
             departureHourCB.setItems(FXCollections.observableList(IntStream.range(0, 24).boxed().toList()));
             departureMinuteCB.setItems(FXCollections.observableList(IntStream.range(0, 60).boxed().toList()));
-            flightTimeHoursCB.setItems(FXCollections.observableList(IntStream.range(0, 24).boxed().toList()));
-            flightTimeMinutesCB.setItems(FXCollections.observableList(IntStream.range(0, 60).boxed().toList()));
             seatConfigCB.setItems(FXCollections.observableList(configurazioni.stream().map(Configurazione::getNomeConfigurazione).toList()));
 
             FlightNumCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

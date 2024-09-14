@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.dbairline.controller.LoginWindowController">
+   <children>
+      <Pane minWidth="-Infinity">
+         <children>
+            <VBox alignment="CENTER">
+               <children>
+                  <GridPane hgap="5.0" vgap="5.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                      <ColumnConstraints hgrow="SOMETIMES" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="usernameTF" GridPane.columnIndex="1" />
+                        <ChoiceBox fx:id="windowSelectionCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Nome utente" />
+                        <Label text="Selezione schermata" GridPane.rowIndex="3" />
+                        <TextField fx:id="passwordTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="urlTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Password" GridPane.rowIndex="1" />
+                        <Label text="Url database" GridPane.rowIndex="2" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </GridPane>
+                  <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#login" text="Login" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

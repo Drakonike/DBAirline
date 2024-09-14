@@ -13,6 +13,7 @@ import org.application.dbairline.model.data.tables.Classe;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,13 +21,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class InsertConfigurationWindowController implements Initializable {
-    List<String> seatLetters = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+    private final List<String> SEAT_LETTERS = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
 
-    private MainWindowController parentController;
+    private WindowController parentController;
     private List<Classe> flightClasses;
     private List<FlightClassConfig> savedFlightClassConfigurations;
 
-    private class FlightClassConfig {
+    public class FlightClassConfig {
         private int numConfigClass;
         private int idFlightClass;
         private String nameFlightClass;
@@ -81,15 +82,13 @@ public class InsertConfigurationWindowController implements Initializable {
     @FXML
     private TextField columnTF;
     @FXML
+    private TextField rowTF;
+    @FXML
     private TextField configNameTF;
     @FXML
     private ChoiceBox<String> flightClassesCB;
     @FXML
     private Button insertButton;
-    @FXML
-    private Button insertFlightClassButton;
-    @FXML
-    private TextField rowTF;
 
 
     @FXML
@@ -104,12 +103,12 @@ public class InsertConfigurationWindowController implements Initializable {
         if (configName == null || configName.isEmpty()) {
             showErrorAlert("Errore di input",
                     "Il nome della configurazione deve essere compilato.");
-            throw new RuntimeException("Configuration name text field returned invalid value");
+            throw new RuntimeException("Nome Configurazione è invalido.");
         }
 
         if (savedFlightClassConfigurations.isEmpty()) {
             showErrorAlert("Errore di input",
-                    "Inserire almeno una configurazione di classe di volo");
+                    "Inserire almeno una configurazione di classe di volo.");
             throw new RuntimeException("");
         }
 
@@ -118,30 +117,31 @@ public class InsertConfigurationWindowController implements Initializable {
 
         Connection conn = null;
         try {
-            conn = DAUtility.getConnection();
-            conn.setAutoCommit(false);
+            conn = DAUtility.getConnection(false, Connection.TRANSACTION_READ_UNCOMMITTED);
 
-            int res = DAUtility.executeUpdate(conn, Queries.Insertions.CONFIGURAZIONI, configName, totalSeats);
+            ResultSet res = DAUtility.executeUpdateWithGeneratedKeys(conn, Queries.Insertions.CONFIGURAZIONI, configName, totalSeats);
 
-            if (res == 0) {
+            int configID = -1;
+            if (res.next()) {
+                configID = res.getInt(1);
+            } else{
                 showErrorAlert("Errore del database", "Inserzione della configurazione fallita.");
-                return;
+                throw new Exception();
             }
-
+            res.close();
 
             int seatIndex = 1;
             for (FlightClassConfig flightClassConfiguration : savedFlightClassConfigurations) {
                 if (flightClasses.stream()
                         .map(Classe::getIdClasse)
                         .toList()
-                        .contains(flightClassConfiguration.idFlightClass))
-                {
-                    for (int c = 0; c < flightClassConfiguration.getNumCols() && seatIndex < seatLetters.size(); c++) {
+                        .contains(flightClassConfiguration.idFlightClass)) {
+                    for (int c = 0; c < flightClassConfiguration.getNumCols() && seatIndex < SEAT_LETTERS.size(); c++) {
                         for (int r = 0; r < flightClassConfiguration.getNumRows(); r++) {
                             try {
                                 DAUtility.executeUpdate(conn, Queries.Insertions.POSTI,
-                                        flightClassConfiguration.getIdFlightClass(),
-                                        r + seatLetters.get(seatIndex),
+                                        configID,
+                                        r + SEAT_LETTERS.get(seatIndex),
                                         flightClassConfiguration.getIdFlightClass());
                             } catch (SQLException e) {
                                 throw new RuntimeException(e);
@@ -156,6 +156,7 @@ public class InsertConfigurationWindowController implements Initializable {
                 }
             }
 
+            conn.commit();
             conn.close();
             parentController.refreshTableViews();
             Stage stage = (Stage) insertButton.getScene().getWindow();
@@ -164,6 +165,7 @@ public class InsertConfigurationWindowController implements Initializable {
             if (conn != null) {
                 try {
                     conn.rollback();
+                    conn.close();
                 } catch (SQLException se) {
                     System.out.println("Transaction rollback failed");
                     System.out.println(se.getMessage());
@@ -175,32 +177,43 @@ public class InsertConfigurationWindowController implements Initializable {
 
     @FXML
     void InsertFlightClassInConfiguration(MouseEvent event) {
-        int columns = Integer.parseInt(columnTF.getText());
-        if (columns >= seatLetters.size()) {
-            return;
+        int columns = 0;
+        int rows = 0;
+        try {
+            columns = Integer.parseInt(columnTF.getText());
+            if (columns >= SEAT_LETTERS.size()) {
+                showErrorAlert("Errore di input", "Il numero massimo di colonne è 26.");
+                return;
+            }
+            rows = Integer.parseInt(rowTF.getText());
+        } catch (NumberFormatException e) {
+            showErrorAlert("Errore di input", "I campi colonna e righe devono contenere solo un numero.");
         }
-        int rows = Integer.parseInt(rowTF.getText());
         String flightClassName = flightClassesCB.getSelectionModel().getSelectedItem();
 
-        int flightCLassID = flightClasses.stream()
-                .filter(c -> c.getNomeClasse().equals(flightClassName))
-                .map(Classe::getIdClasse)
-                .toList()
-                .getFirst();
-        savedFlightClassConfigurations.add(new FlightClassConfig(
-                savedFlightClassConfigurations.size() + 1,
-                flightCLassID,
-                flightClassName,
-                columns,
-                rows));
+        if (columns == 0 || rows == 0 || flightClassName == null) {
+            showErrorAlert("Errore di input", "Riempire tutti i campi con valori validi.");
 
-        flightClassConfigTable.setItems(FXCollections.observableList(savedFlightClassConfigurations));
+        } else {
+            int flightCLassID = flightClasses.stream()
+                    .filter(c -> c.getNomeClasse().equals(flightClassName))
+                    .map(Classe::getIdClasse)
+                    .toList()
+                    .getFirst();
+            savedFlightClassConfigurations.add(new FlightClassConfig(
+                    savedFlightClassConfigurations.size() + 1,
+                    flightCLassID,
+                    flightClassName,
+                    columns,
+                    rows));
+
+            flightClassConfigTable.setItems(FXCollections.observableList(savedFlightClassConfigurations));
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            numConfigClassCol.setCellValueFactory(new PropertyValueFactory<>("numConfigClass"));
             flightClassNameCol.setCellValueFactory(new PropertyValueFactory<>("nameFlightClass"));
             flightClassSeatsCol.setCellValueFactory(new PropertyValueFactory<>("numOfSeats"));
 
@@ -219,9 +232,9 @@ public class InsertConfigurationWindowController implements Initializable {
         }
     }
 
-    public int prepare(MainWindowController mainWindowController) {
-        if (mainWindowController != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller) {
+        if (Controller != null) {
+            this.parentController = Controller;
             return 0;
         } else {
             return 1;

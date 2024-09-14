@@ -1,14 +1,14 @@
 package org.application.dbairline.model.data.tables;
 
 /**
- * The Assegnazione class represents an assignment between a dipendente (employee) and a volo (flight).
+ * The Equipaggio class represents an assignment between a dipendente (employee) and a volo (flight).
  * It contains the id of the dipendente and the id of the volo.
  */
-public class Assegnazione {
+public class Equipaggio {
     private int idDipendente;
     private int idVolo;
 
-    public Assegnazione(int idDipendente, int idVolo) {
+    public Equipaggio(int idDipendente, int idVolo) {
         this.idDipendente = idDipendente;
         this.idVolo = idVolo;
     }

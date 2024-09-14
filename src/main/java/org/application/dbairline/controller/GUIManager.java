@@ -5,23 +5,29 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.application.dbairline.App;
+import org.application.dbairline.model.data.DAUtility;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-public class WindowManager {
+public class GUIManager {
+
+    private final Map<String,String> screens = Map.of("Administrazione", "AdministrationWindow.fxml", "Dispatcher", "DispatcherWindow.fxml", "Gestione Biglietti", "TicketManagerWindow.fxml");
+
     private final Stage primaryStage;
     private final Stage popup;
 
-    public WindowManager(Stage stage) {
+    public GUIManager(Stage stage) {
         primaryStage = stage;
         popup = new Stage();
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.initOwner(primaryStage);
 
         try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/MainWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/LoginWindow.fxml"));
             Scene scene = new Scene(loader.load());
-            MainWindowController controller = loader.getController();
+            LoginWindowController controller = loader.getController();
             controller.setManager(this);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
@@ -29,10 +35,6 @@ public class WindowManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
     }
 
     public Stage createPopup(FXMLLoader loader) {
@@ -46,5 +48,22 @@ public class WindowManager {
             }
         }
         return null;
+    }
+
+    public void createWindow(String chosenWindow) {
+
+        String screenPath = screens.get(chosenWindow);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/" + screenPath));
+            Scene scene = new Scene(loader.load());
+            WindowController controller = loader.getController();
+            controller.setManager(this);
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

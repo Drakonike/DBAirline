@@ -62,8 +62,8 @@
                   <Label text="Nome completo" GridPane.rowIndex="1" />
                   <TextField fx:id="buyerNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label layoutX="10.0" layoutY="47.0" text="Dati acquirente" />
-                  <Label layoutX="10.0" layoutY="47.0" text="Nome completo" GridPane.rowIndex="2" />
-                  <Label layoutX="10.0" layoutY="47.0" text="Nome completo" GridPane.rowIndex="3" />
+                  <Label layoutX="10.0" layoutY="47.0" text="Email" GridPane.rowIndex="2" />
+                  <Label layoutX="10.0" layoutY="47.0" text="Telefono" GridPane.rowIndex="3" />
                   <TextField fx:id="buyerTelephoneTextField" layoutX="205.0" layoutY="43.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="buyerEmailTextField" layoutX="205.0" layoutY="43.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>

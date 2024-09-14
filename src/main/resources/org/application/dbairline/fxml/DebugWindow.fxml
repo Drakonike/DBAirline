@@ -1,10 +1,10 @@
-MainWindow.fxml<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="MainWindow" prefHeight="800.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.dbairline.controller.MainWindowController">
+<VBox fx:id="MainWindow" prefHeight="800.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.application.dbairline.controller.DebugWindowController">
   <children>
       <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -82,7 +82,6 @@ MainWindow.fxml<?xml version="1.0" encoding="UTF-8"?>
                                               <TableColumn fx:id="schedulesLegNumberColumn" prefWidth="100.0" text="Numero tratta" />
                                                 <TableColumn fx:id="schedulesDayColumn" prefWidth="100.0" text="Giorno" />
                                                 <TableColumn fx:id="schedulesDepartureTimeColumn" prefWidth="100.0" text="Ora di partenza" />
-                                                <TableColumn fx:id="schedulesFlightTimeColumn" prefWidth="100.0" text="Tempo pecorrenza" />
                                                 <TableColumn fx:id="schedulesSeatConfigurationIdColumn" prefWidth="100.0" text="Configurazione" />
                                             </columns>
                                           </TableView>
@@ -179,6 +178,7 @@ MainWindow.fxml<?xml version="1.0" encoding="UTF-8"?>
                                                    <FlowPane.margin>
                                                       <Insets />
                                                    </FlowPane.margin></Button>
+                                                <Button id="InsertNewFlight" layoutX="513.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#modifyFlight" text="Modifica volo" />
                                                 <Button id="InsertNewFlight" mnemonicParsing="false" onMouseClicked="#insertRefuel" text="Inserisci rifonimento" />
                                                 <Button id="InsertNewFlight" layoutX="600.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#modifyCabinCrew" text="Modifica Equipaggio di volo" />
                                              </children>
@@ -422,7 +422,6 @@ MainWindow.fxml<?xml version="1.0" encoding="UTF-8"?>
                                     <TableView fx:id="ticketsTable">
                                        <columns>
                                           <TableColumn fx:id="ticketsIdColumn" prefWidth="100.0" text="Id" />
-                                          <TableColumn fx:id="ticketsFlightNumberColumn" prefWidth="100.0" text="Numero di volo" />
                                           <TableColumn fx:id="ticketsFlightIdColumn" prefWidth="100.0" text="Id volo" />
                                           <TableColumn fx:id="ticketsFlightClassNameColumn" prefWidth="100.0" text="Classe di volo" />
                                           <TableColumn fx:id="ticketsSeatNumberColumn" prefWidth="100.0" text="Posto" />

@@ -20,16 +20,16 @@ public class Queries {
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """;
 
-        public static final String ASSEGNAZIONI =
+        public static final String EQUIPAGGI =
                 """
-                        INSERT INTO ASSEGNAZIONI (IdDipendente, IdVolo) 
+                        INSERT INTO EQUIPAGGI (IdDipendente, IdVolo) 
                         VALUES (?, ?)
                         """;
 
         public static final String BIGLIETTI =
                 """
-                        INSERT INTO BIGLIETTI (NumeroDiVolo, NomePasseggero, IdAcquisto, Prezzo, IdVolo, IdConfigurazione, NumeroPosto) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                        INSERT INTO BIGLIETTI (NomePasseggero, IdAcquisto, Prezzo, IdVolo, IdConfigurazione, NumeroPosto) 
+                        VALUES (?, ?, ?, ?, ?, ?)
                         """;
 
         public static final String CLASSI =
@@ -56,12 +56,6 @@ public class Queries {
                         VALUES (?, ?)
                         """;
 
-        public static final String PAGAMENTI =
-                """
-                        INSERT INTO PAGAMENTI (IdAcquisto, IdTariffa) 
-                        VALUES (?, ?)                
-                        """;
-
         public static final String POSTI =
                 """
                         INSERT INTO POSTI (IdConfigurazione, NumeroPosto, IdClasse) 
@@ -70,8 +64,8 @@ public class Queries {
 
         public static final String PROGRAMMI =
                 """
-                        INSERT INTO PROGRAMMI (NumeroDiVolo, NumeroTratta, Giorno, OraPartenza, TempoDiPercorrenza, IdConfigurazione) 
-                        VALUES (?, ?, ?, ?, ?, ?)                
+                        INSERT INTO PROGRAMMI (NumeroDiVolo, NumeroTratta, Giorno, OraPartenza, IdConfigurazione) 
+                        VALUES (?, ?, ?, ?, ?)                
                         """;
 
         public static final String RIFORNIMENTI =
@@ -80,13 +74,13 @@ public class Queries {
                         VALUES (?, ?, ?, ?)
                         """;
 
-        public static final String TARIFFE =
+        public static final String TARIFFE_CON_DATAFINE =
                 """
                         INSERT INTO TARIFFE (NumeroDiVolo, NumeroTratta, IdClasse, DataInizio, DataFine, Tariffa) 
                         VALUES (?, ?, ?, ?, ?, ?)
                         """;
 
-        public static final String TARIFFE_SENZA_DATAFINE =
+        public static final String TARIFFE =
                 """
                         INSERT INTO TARIFFE (NumeroDiVolo, NumeroTratta, IdClasse, DataInizio, Tariffa) 
                         VALUES (?, ?, ?, ?, ?)
@@ -94,7 +88,7 @@ public class Queries {
 
         public static final String TRATTE =
                 """
-                        INSERT INTO TRATTE (NumeroDiVolo, NumeroTratta, Partenza, Destinazione) 
+                        INSERT INTO TRATTE (NumeroDiVolo, NumeroTratta, Partenza, Destinazione, TempoDiPercorrenza) 
                         VALUES (?, ?, ?, ?)
                         """;
 
@@ -126,14 +120,14 @@ public class Queries {
                         SELECT * FROM AEROPORTI
                         """;
 
-        public static final String ASSEGNAZIONI =
+        public static final String EQUIPAGGI =
                 """
-                        SELECT * FROM ASSEGNAZIONI
+                        SELECT * FROM EQUIPAGGI
                         """;
 
         public static final String BIGLIETTI =
                 """
-                        SELECT *FROM BIGLIETTI
+                        SELECT * FROM BIGLIETTI
                         """;
 
         public static final String CLASSI =
@@ -154,11 +148,6 @@ public class Queries {
         public static final String ITINERARI =
                 """
                         SELECT * FROM ITINERARI
-                        """;
-
-        public static final String PAGAMENTI =
-                """
-                        SELECT * FROM PAGAMENTI
                         """;
 
         public static final String POSTI =

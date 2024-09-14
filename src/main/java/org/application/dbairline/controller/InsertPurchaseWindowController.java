@@ -56,7 +56,7 @@ public class InsertPurchaseWindowController implements Initializable {
     @FXML
     private TextField buyerTelephoneTextField;
 
-    private MainWindowController parentController;
+    private WindowController parentController;
     private List<Volo> flights;
     private List<Classe> flightClasses;
     private List<Posto> seats;
@@ -100,23 +100,26 @@ public class InsertPurchaseWindowController implements Initializable {
         try {
             conn = DAUtility.getConnection(false, Connection.TRANSACTION_SERIALIZABLE);
 
-            int purchaseId = 0;
-
-            DAUtility.executeUpdate(conn, Queries.Insertions.ACQUISTI,
+            ResultSet res = DAUtility.executeUpdateWithGeneratedKeys(conn, Queries.Insertions.ACQUISTI,
                     Date.valueOf(LocalDate.now().toString()),
                     buyerName,
                     buyerEmail,
                     buyerTelephone,
                     amount);
 
-            String sql = "SELECT LAST_INSERT_ID()";
-            ResultSet rs = DAUtility.executeQuery(conn, sql);
-            if (rs.next()) {
-                purchaseId = rs.getInt(1);
+            Integer purchaseId = -1;
+            if (res.next()) {
+                purchaseId = res.getInt(1);
             }
 
+            if (purchaseId < 0) {
+                showErrorAlert("Errore di input",
+                        "Si prega di compilare tutti i campi prima di procedere.");
+                throw new Exception("ResultSet has not returned a valid id.");
+            }
+            res.close();
+
             List<Biglietto> distinctTickets = tickets.stream().distinct().toList();
-            int res;
             for (Biglietto ticket : distinctTickets) {
                 Integer flightNumber = flights.stream()
                         .filter(f -> f.getIdVolo() == ticket.getIdVolo())
@@ -137,11 +140,8 @@ public class InsertPurchaseWindowController implements Initializable {
                         .orElse(null);
 
                 if (flightNumber == null || legNumber == null || flightClassId == null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Insertion Error");
-                    alert.setContentText("Failed to insert data into the database.");
-                    alert.showAndWait();
+                    showErrorAlert("Errore del database",
+                            "Numero di volo, numero tratta o classe di volo potrebbero non essere presenti nel database.");
                     return;
                 }
 
@@ -154,66 +154,37 @@ public class InsertPurchaseWindowController implements Initializable {
                         .orElse(null);
 
                 if (fareId == null) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Insertion Error");
-                    alert.setContentText("Failed to insert data into the database.");
-                    alert.showAndWait();
-                    return;
+                    showErrorAlert("Errore del database", "Inserzione fallita.");
+                    throw new IllegalArgumentException("Fare ID is invalid.");
                 }
 
-
-                String whereNotExistSQL = " WHERE NOT EXISTS " +
-                                          "(SELECT IdAcquisto, IdTariffa " +
-                                          "FROM PAGAMENTI " +
-                                          "WHERE IdAcquisto = ? AND IdTariffa = ?)";
-                res = DAUtility.executeUpdate(conn,
-                        Queries.Insertions.PAGAMENTI + whereNotExistSQL,
-                        purchaseId, fareId, purchaseId, fareId);
-
-                if (res == 0) {
-                    throw new IllegalStateException("Failed to insert into payments");
-                }
-
-                res = DAUtility.executeUpdate(conn, Queries.Insertions.BIGLIETTI,
-                        ticket.getNumeroDiVolo(),
+                int result = DAUtility.executeUpdate(conn, Queries.Insertions.BIGLIETTI,
                         ticket.getNomePasseggero(),
                         purchaseId,
                         ticket.getPrezzo(),
                         ticket.getIdVolo(),
                         ticket.getIdConfigurazione(),
                         ticket.getNumeroPosto());
-                if (res == 0) {
+                if (result == 0) {
                     throw new IllegalStateException("Failed to insert ticket");
                 }
             }
 
             conn.commit();
+            conn.close();
+            parentController.refreshTableViews();
+            Stage stage = (Stage) insertButton.getScene().getWindow();
+            stage.close();
         } catch (Exception e) {
             if (conn != null) {
                 try {
                     conn.rollback();
+                    conn.close();
                 } catch (SQLException se) {
                     throw new RuntimeException("Transaction rollback failed", se);
                 }
             }
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Insertion Error");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-            return;
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close(); // Close the connection whenever done
-                } catch (SQLException se) {
-                    throw new RuntimeException("Failed to close database connection", se);
-                }
-            }
-            parentController.refreshTableViews();
-            Stage stage = (Stage) insertButton.getScene().getWindow();
-            stage.close();
+            showErrorAlert("Errore del database", "Inserzione fallita.");
         }
     }
 
@@ -225,11 +196,8 @@ public class InsertPurchaseWindowController implements Initializable {
         String seat = seatComboBox.getSelectionModel().getSelectedItem();
 
         if (paxName == null || flightId == null || flightClassName == null || seat == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Input Error");
-            alert.setContentText("Fields must be filled out.");
-            alert.showAndWait();
+            showErrorAlert("Errore di input",
+                    "Si prega di compilare tutti i campi prima di procedere.");
             return;
         }
 
@@ -248,11 +216,8 @@ public class InsertPurchaseWindowController implements Initializable {
                 .orElse(null);
 
         if (flightNumber == null || legNumber == null || configId == null || flightClassId == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Insertion Error");
-            alert.setContentText("Something has gone wrong while inserting ticket.");
-            alert.showAndWait();
+            showErrorAlert("Errore di inserzione",
+                    "Qualcosa è andato storto.");
             return;
         }
 
@@ -271,7 +236,6 @@ public class InsertPurchaseWindowController implements Initializable {
 
         tickets.add(new Biglietto(
                 0,
-                flightNumber,
                 paxName,
                 0,
                 fare,
@@ -402,9 +366,9 @@ public class InsertPurchaseWindowController implements Initializable {
         });
     }
 
-    public int prepare(MainWindowController mainWindowController) {
-        if (mainWindowController != null) {
-            this.parentController = mainWindowController;
+    public int prepare(WindowController Controller) {
+        if (Controller != null) {
+            this.parentController = Controller;
             return 0;
         } else {
             return 1;

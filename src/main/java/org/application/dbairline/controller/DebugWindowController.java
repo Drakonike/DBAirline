@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableColumn;
@@ -22,9 +21,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainWindowController implements Initializable {
+public class DebugWindowController extends WindowController {
 
-    private WindowManager manager;
+    private GUIManager manager;
 
     @FXML
     private TableColumn<?, ?> aircraftsBuilderColumn;
@@ -225,8 +224,6 @@ public class MainWindowController implements Initializable {
     @FXML
     private TableColumn<?, ?> ticketsFlightIdColumn;
     @FXML
-    private TableColumn<?, ?> ticketsFlightNumberColumn;
-    @FXML
     private TableColumn<?, ?> ticketsIdColumn;
     @FXML
     private TableColumn<?, ?> ticketsSeatNumberColumn;
@@ -240,11 +237,6 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        boolean res = DAUtility.setCredentials("jdbc:mysql://localhost:3306/airline", "root", "admin");
-        if (!res) {
-            System.out.println("Credentials can't be set");
-            System.exit(1);
-        }
 
         this.configureTables();
 
@@ -267,8 +259,8 @@ public class MainWindowController implements Initializable {
         }
     }
 
-    public void setManager(WindowManager windowManager) {
-        this.manager = windowManager;
+    public void setManager(GUIManager GUIManager) {
+        this.manager = GUIManager;
     }
 
     @FXML
@@ -397,6 +389,18 @@ public class MainWindowController implements Initializable {
         }
     }
 
+    @FXML
+    private void modifyFlight(MouseEvent event) {
+        Volo clickedRow = flightsTable.getSelectionModel().getSelectedItem();
+        if (clickedRow != null) {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("fxml/ModifyFlightWindow.fxml"));
+            Stage stage = manager.createPopup(loader);
+            ModifyFlightWindowController controller = loader.getController();
+            controller.prepare(this, clickedRow.getIdVolo());
+            stage.showAndWait();
+        }
+    }
+
 
     private void setupAircraftTable() {
         aircraftsBuilderColumn.setCellValueFactory(new PropertyValueFactory<>("costruttore"));
@@ -486,7 +490,6 @@ public class MainWindowController implements Initializable {
         schedulesSeatConfigurationIdColumn.setCellValueFactory(new PropertyValueFactory<>("idConfigurazione"));
         schedulesDayColumn.setCellValueFactory(new PropertyValueFactory<>("giorno"));
         schedulesFlightNumberColumn.setCellValueFactory(new PropertyValueFactory<>("numeroDiVolo"));
-        schedulesFlightTimeColumn.setCellValueFactory(new PropertyValueFactory<>("tempoDIPercorrenza"));
         schedulesDepartureTimeColumn.setCellValueFactory(new PropertyValueFactory<>("oraPartenza"));
         schedulesLegNumberColumn.setCellValueFactory(new PropertyValueFactory<>("numeroTratta"));
     }
@@ -511,7 +514,6 @@ public class MainWindowController implements Initializable {
         ticketsPurchaseIdColumn.setCellValueFactory(new PropertyValueFactory<>("idAcquisto"));
         ticketsFlightClassNameColumn.setCellValueFactory(new PropertyValueFactory<>("nomeClasse"));
         ticketsFlightIdColumn.setCellValueFactory(new PropertyValueFactory<>("idVolo"));
-        ticketsFlightNumberColumn.setCellValueFactory(new PropertyValueFactory<>("numeroDiVolo"));
         ticketsIdColumn.setCellValueFactory(new PropertyValueFactory<>("idBiglietto"));
         ticketsSeatNumberColumn.setCellValueFactory(new PropertyValueFactory<>("numeroPosto"));
         ticketsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("prezzo"));
@@ -627,7 +629,7 @@ public class MainWindowController implements Initializable {
             itinerariesTable.setItems(itinerariesData);
         }
 
-        if (itinerariesTable.getFocusModel().getFocusedItem() != null) {
+        if (itinerariesTable.isFocused() && itinerariesTable.getFocusModel().getFocusedItem() != null) {
             ObservableList<Tratta> legsData = FXCollections.observableArrayList();
             legsData.addAll(fetchLegsFromDatabase(conn, itinerariesTable.getFocusModel().getFocusedItem().getNumeroDiVolo()));
             if (!legsData.isEmpty()) {
@@ -670,9 +672,7 @@ public class MainWindowController implements Initializable {
         if (!ticketsData.isEmpty()) {
             ticketsTable.setItems(ticketsData);
         }
-
     }
-
 
     /////////////////////////////////////// Data fetching for tables /////////////////////////////////////////////////
 
@@ -785,12 +785,12 @@ public class MainWindowController implements Initializable {
     private List<Biglietto> fetchTicketsFromDatabase(Connection conn) {
         List<Biglietto> biglietti;
         try {
-            String selectTicketsWithFlightClassNames = "SELECT B.IdBiglietto, B.NumeroDiVolo, B.NomePasseggero, \n" +
-                                                       "B.IdAcquisto, B.Prezzo, B.IdVolo, B.IdConfigurazione, \n" +
-                                                       "B.NumeroPosto, C.NomeClasse \n" +
-                                                       "FROM BIGLIETTI B \n" +
-                                                       "JOIN POSTI P ON B.IdConfigurazione = P.IdConfigurazione \n" +
-                                                       "JOIN CLASSI C ON P.IdClasse = C.IdClasse";
+            String selectTicketsWithFlightClassNames =
+                    "SELECT B.IdBiglietto, B.NomePasseggero, B.IdAcquisto, B.Prezzo, B.IdVolo, B.IdConfigurazione, B.NumeroPosto, C.NomeClasse " +
+                    "FROM BIGLIETTI B " +
+                    "JOIN POSTI P ON B.IdConfigurazione = P.IdConfigurazione AND B.NumeroPosto = P.NumeroPosto " +
+                    "JOIN CLASSI C ON P.IdClasse = C.IdClasse";
+
             biglietti = Biglietto.mapToWithFlightClassName(DAUtility.executeQuery(conn, selectTicketsWithFlightClassNames));
         } catch (SQLException e) {
             System.out.println(e);
